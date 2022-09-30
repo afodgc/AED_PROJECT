@@ -11,6 +11,7 @@ int main(int argc, char **argv)
     strcpy(extension, "pals");
     file_pals = get_arguments(argc, argv, file_pals, extension);
 
+    printf("teste de git!");
     free(file_pals);
     return EXIT_SUCCESS;
 }
