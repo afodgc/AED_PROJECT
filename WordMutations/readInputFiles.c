@@ -17,10 +17,12 @@ void readProblemFile(problem *p, char *file_pals)
 {
     FILE *fp;
     p->next = NULL;
-
+    p->game_mode = 0;
     fp = openFile(file_pals, "r");
 
-    while ((fscanf(fp, "%s %s %d", p->starting_word, p->arrival_word, p->game_mode) == 3))
+    
+
+    while ((fscanf(fp, "%s %s %d", p->starting_word, p->arrival_word, &(p->game_mode)) == 3))
     {
         printf("%s %s %d", p->starting_word, p->arrival_word, p->game_mode);
     }

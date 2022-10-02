@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     strcpy(extension, "pals");
     file_pals = get_arguments(argc, argv, file_pals, extension);
 
-    readProblemFile(&problem, file_pals);
+    readProblemFile(&problem, argv[2]);
 
     free(file_pals);
     return EXIT_SUCCESS;
