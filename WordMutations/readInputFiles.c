@@ -21,6 +21,14 @@ FILE *openFile(char *file_pals, char *mode)
     return fp;
 }
 
+/*************************************************************************************************
+ * readProblemFile()
+ * argumets:
+ *          problem *p:       struct que contem a palavra incial e final do problema e o game mode
+ *          char *file_pals:  nome do ficheiro que contem os problemas que se pretende resolver
+ * 
+ * return:  void
+ *************************************************************************************************/
 void readProblemFile(problem *p, char *file_pals)
 {
     FILE *fp;
