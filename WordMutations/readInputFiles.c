@@ -7,6 +7,8 @@
  *          char *mode:      modo de abertura do ficheiro
  * 
  * return:  FILE *fp:        ponteiro para o ficheiro que foi aberto
+ * 
+ * side efects: abre o ficheiro e verifica se aabertura foi bem feita 
  *******************************************************************/
 FILE *openFile(char *file_pals, char *mode)
 {
@@ -28,6 +30,8 @@ FILE *openFile(char *file_pals, char *mode)
  *          char *file_pals:  nome do ficheiro que contem os problemas que se pretende resolver
  * 
  * return:  void
+ * 
+ * side efects: função que lê e guarda numa lista todos os dados dos problemas a serem executados
  *************************************************************************************************/
 void readProblemFile(problem *p, char *file_pals)
 {
