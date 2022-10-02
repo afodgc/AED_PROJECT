@@ -20,7 +20,6 @@ int main(int argc, char **argv)
 
     /*frees*/
     free(file_pals);
-    free(file_dict);
 
     return EXIT_SUCCESS;
 }

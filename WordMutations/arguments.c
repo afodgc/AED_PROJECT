@@ -1,11 +1,24 @@
 #include "headers.h"
 
+
+/**********************************************************
+ * get_arguments()
+ * argumets:
+ *          int argc:        number of argumets
+ *          char **argv:     vetor dos argumentos
+ *          char *file_name: nome do ficheiro
+ *          char extension[]:extenção a ser verificada
+ * 
+ * return:  char *file_name nome do ficheiro sem a extenção
+ * 
+ * side efects: verifica se os argumetos tem extenções corretas
+ *********************************************************/
 char* get_arguments(int argc, char **argv, char *file_name, char extension[]){
 
-    char *dict_extension = NULL;
-    int dots = 0;
-    int argument_size = 0;
-    int index = 0;
+    char *dict_extension = NULL; //extenção que argumeto tem
+    int dots = 0;                //numero de pontos que o argumeto tem
+    int argument_size = 0;       //tamanho do argumeto
+    int index = 0;               //variavel que diz qual o argumeto a ser analisado(1 ou 2)
     int i = 0;
     
     //primeiro que tudo verificar se foram inseridos 2 argumentos
