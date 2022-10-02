@@ -1,5 +1,13 @@
 #include "headers.h"
 
+/********************************************************************
+ * openFile()
+ * argumets: 
+ *          char *file_pals: nome do ficheiro que se pretende abrir
+ *          char *mode:      modo de abertura do ficheiro
+ * 
+ * return:  FILE *fp:        ponteiro para o ficheiro que foi aberto
+ *******************************************************************/
 FILE *openFile(char *file_pals, char *mode)
 {
     FILE *fp;
