@@ -4,8 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX_STR 30
 
-char* get_arguments(int argc, char **argv, char *file_name, char extension[]);
+typedef struct _problem
+{
+    char starting_word[MAX_STR];
+    char arrival_word[MAX_STR];
+    int game_mode;
+    struct _problem *next;
+} problem;
 
+char *get_arguments(int argc, char **argv, char *file_name, char extension[]);
+
+void readProblemFile(problem *p, char *file_pals);
 
 #endif

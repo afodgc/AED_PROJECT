@@ -2,6 +2,7 @@
 
 int main(int argc, char **argv)
 {
+    problem problem;
 
     char *file_dict = NULL, *file_pals = NULL;
 
@@ -10,6 +11,8 @@ int main(int argc, char **argv)
 
     strcpy(extension, "pals");
     file_pals = get_arguments(argc, argv, file_pals, extension);
+
+    readProblemFile(&problem, file_pals);
 
     free(file_pals);
     return EXIT_SUCCESS;
