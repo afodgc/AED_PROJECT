@@ -16,11 +16,22 @@ FILE *openFile(char *file_pals, char *mode)
     fp = fopen(file_pals, mode);
 
     if (fp == NULL)
-    {
-        printf("erro no ficheiro");
         exit(0);
-    }
+
     return fp;
+}
+
+void freeProblem(problem *head)
+{
+    problem *aux;
+
+    while (head != NULL)
+    {
+        aux = head;
+        printf("%s %s %d\n", head->starting_word, head->arrival_word, head->game_mode);
+        head = aux->next;
+        free(aux);
+    }
 }
 
 /*************************************************************************************************
@@ -33,16 +44,27 @@ FILE *openFile(char *file_pals, char *mode)
  *
  * side efects: função que lê e guarda numa lista todos os dados dos problemas a serem executados
  *************************************************************************************************/
-void readProblemFile(problem *p, char *file_pals, problem *head)
+problem *readProblemFile(problem *p, char *file_pals, problem *head)
 {
     FILE *fp;
-    p->next = NULL;
-    p->game_mode = 0;
+    problem *aux;
+
     fp = openFile(file_pals, "r");
+
+    p = (problem *)malloc(sizeof(problem));
+    p->next = NULL;
+    head = p;
 
     while ((fscanf(fp, "%s %s %d", p->starting_word, p->arrival_word, &(p->game_mode)) == 3))
     {
+        aux = p;
+        p = (problem *)malloc(sizeof(problem));
+        aux->next = p;
+        p->game_mode = 0;
+
+        p->next = NULL;
     }
 
     fclose(fp);
+    return head;
 }

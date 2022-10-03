@@ -42,6 +42,9 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
 
     dict_extension = (char *)malloc(sizeof(char) * (5 + 1));
 
+    if (dict_extension == NULL)
+        exit(0);
+
     for (i = argument_size - 5, k = 0; i < argument_size; i++, k++)
     {
         dict_extension[k] = argv[index][i];
@@ -61,6 +64,8 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
     }
 
     file_name = (char *)malloc(sizeof(char) * (argument_size - 5 + 1)); //-5 por causa da .dict e +1 por causa do '/0'
+    if (file_name == NULL)
+        exit(0);
 
     // copiar o file_name
     for (i = 0; i < argument_size - 5; i++)
