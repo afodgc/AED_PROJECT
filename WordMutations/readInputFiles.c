@@ -61,10 +61,11 @@ problem *readProblemFile(problem *p, char *file_pals, problem *head)
         p = (problem *)malloc(sizeof(problem));
         aux->next = p;
         p->game_mode = 0;
-
         p->next = NULL;
     }
 
+    aux->next = NULL;
+    free(p); // dar free no último que alocamos mas não vamos usar
     fclose(fp);
     return head;
 }
