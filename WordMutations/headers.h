@@ -16,6 +16,6 @@ typedef struct _problem
 
 char *get_arguments(int argc, char **argv, char *file_name, char extension[]);
 
-void readProblemFile(problem *p, char *file_pals);
+void readProblemFile(problem *p, char *file_pals, problem *head);
 
 #endif

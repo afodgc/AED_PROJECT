@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv)
 {
-    problem problem;                           /*struct que guarda todos os dados via input sobre o problema*/
+    problem problem, head;                     /*struct que guarda todos os dados via input sobre o problema*/
     char *file_dict = NULL, *file_pals = NULL; /*nome dos ficheiros de input*/
 
     char extension[] = ".dict";
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     strcpy(extension, ".pals");
     file_pals = get_arguments(argc, argv, file_pals, extension);
 
-   // readProblemFile(&problem, argv[2]);
+    readProblemFile(&problem, argv[2], &head);
 
     /*lê o ficheiro com todos os problemas e armazena as palavras iniciais, finais e gameMode*/
     // readProblemFile(&problem, argv[2]);
