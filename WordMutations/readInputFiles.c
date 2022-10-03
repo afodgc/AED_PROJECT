@@ -16,9 +16,7 @@ FILE *openFile(char *file_pals, char *mode)
     fp = fopen(file_pals, mode);
 
     if (fp == NULL)
-    {
-    }
-    exit(0);
+        exit(0);
 
     return fp;
 }
