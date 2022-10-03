@@ -16,7 +16,6 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
 {
 
     char *dict_extension = NULL; // extenção que argumeto tem
-    int dots = 0;                // numero de pontos que o argumeto tem
     int argument_size = 0;       // tamanho do argumeto
     int index = 0;               // variavel que diz qual o argumeto a ser analisado(1 ou 2)
     int i = 0;
