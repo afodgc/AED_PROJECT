@@ -28,6 +28,7 @@ void freeProblem(problem *head)
     while (head != NULL)
     {
         aux = head;
+        printf("%s %s %d\n", head->starting_word, head->arrival_word, head->game_mode);
         head = aux->next;
         free(aux);
     }
@@ -51,21 +52,18 @@ problem *readProblemFile(problem *p, char *file_pals, problem *head)
     fp = openFile(file_pals, "r");
 
     p = (problem *)malloc(sizeof(problem));
-    // head = (problem *)malloc(sizeof(problem));
-
     p->next = NULL;
     head = p;
 
     while ((fscanf(fp, "%s %s %d", p->starting_word, p->arrival_word, &(p->game_mode)) == 3))
     {
         aux = p;
-        p = aux->next;
         p = (problem *)malloc(sizeof(problem));
+        aux->next = p;
+        p->game_mode = 0;
+
         p->next = NULL;
     }
-
-    free(p); // ultimo malloc nao é usado
-    printf("%s %s %d", head->starting_word, head->arrival_word, head->game_mode);
 
     fclose(fp);
     return head;
