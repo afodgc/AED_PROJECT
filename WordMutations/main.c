@@ -5,10 +5,8 @@ int main(int argc, char **argv)
     problem *problem_head = NULL;              /*struct que guarda todos os dados via input sobre o problema*/
     char *file_dict = NULL, *file_pals = NULL; /*nome dos ficheiros de input*/
 
-    char extension[] = ".dict";
-
     /*verificação se os ficheiros de input tem a extensão correta*/
-
+    char extension[] = ".dict";
     file_dict = get_arguments(argc, argv, file_dict, extension);
 
     strcpy(extension, ".pals");

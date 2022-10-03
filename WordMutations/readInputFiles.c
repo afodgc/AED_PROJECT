@@ -16,7 +16,9 @@ FILE *openFile(char *file_pals, char *mode)
     fp = fopen(file_pals, mode);
 
     if (fp == NULL)
-        exit(0);
+    {
+    }
+    exit(0);
 
     return fp;
 }
@@ -52,6 +54,10 @@ problem *readProblemFile(char *file_pals, problem *head)
     fp = openFile(file_pals, "r");
 
     p = (problem *)malloc(sizeof(problem));
+
+    if (p == NULL)
+        exit(0);
+
     p->next = NULL;
     head = p;
 
@@ -59,6 +65,8 @@ problem *readProblemFile(char *file_pals, problem *head)
     {
         aux = p;
         p = (problem *)malloc(sizeof(problem));
+        if (p == NULL)
+            exit(0);
         aux->next = p;
         p->game_mode = 0;
         p->next = NULL;
