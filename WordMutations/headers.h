@@ -16,10 +16,10 @@ typedef struct _problem
 
 char *get_arguments(int argc, char **argv, char *file_name, char extension[]);
 
-problem *readProblemFile(problem *p, char *file_pals, problem *head);
+problem *readProblemFile(char *file_pals, problem *head);
 void freeProblem(problem *head);
 
-void quicksort(char **dicionario,int first,int last);
+void quicksort(char **dicionario, int first, int last);
 void swapWords(char *first, char *second);
 
 #endif

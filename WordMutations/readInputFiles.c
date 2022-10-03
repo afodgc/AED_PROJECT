@@ -28,7 +28,7 @@ void freeProblem(problem *head)
     while (head != NULL)
     {
         aux = head;
-        printf("%s %s %d\n", head->starting_word, head->arrival_word, head->game_mode);
+        // printf("%s %s %d", head->starting_word, head->arrival_word, head->game_mode);
         head = aux->next;
         free(aux);
     }
@@ -44,10 +44,10 @@ void freeProblem(problem *head)
  *
  * side efects: função que lê e guarda numa lista todos os dados dos problemas a serem executados
  *************************************************************************************************/
-problem *readProblemFile(problem *p, char *file_pals, problem *head)
+problem *readProblemFile(char *file_pals, problem *head)
 {
     FILE *fp;
-    problem *aux;
+    problem *aux, *p;
 
     fp = openFile(file_pals, "r");
 
