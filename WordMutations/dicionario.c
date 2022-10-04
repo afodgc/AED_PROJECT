@@ -105,18 +105,20 @@ int *contadorDePalvaras(FILE *file_dict)
  ********************************************************************************************/
 dict *dict_init(char *file_dict_name)
 {
-   FILE *fp_dict;
+   FILE *fp_dict = NULL;
    int *numOfWordsPerSize = NULL;
-   dict *head;
+   dict *head = NULL;
 
    fp_dict = openFile(file_dict_name, "r");
 
    numOfWordsPerSize = contadorDePalvaras(fp_dict);
 
-   aloc_dict(numOfWordsPerSize, head);
+   head = aloc_dict(numOfWordsPerSize, head);
 
    free(numOfWordsPerSize);
    fclose(fp_dict);
+
+   return head;
 }
 
 /****************************************
@@ -124,7 +126,7 @@ dict *dict_init(char *file_dict_name)
  *
  *
  ****************************************/
-void aloc_dict(int *numOfWordsPerSize, dict *head)
+dict *aloc_dict(int *numOfWordsPerSize, dict *head)
 {
    dict *d, *aux;
 
@@ -143,11 +145,30 @@ void aloc_dict(int *numOfWordsPerSize, dict *head)
             d->table_size = numOfWordsPerSize[index];
             d->word_size = index;
             d->table = (char **)malloc(d->table_size * sizeof(char *));
+            if (d->table == NULL)
+               exit(0);
             head = d;
          }
          else
          {
+            aux = d;
+            d = (dict *)malloc(sizeof(dict));
+            if (d == NULL)
+               exit(0);
+            aux->next = d;
+            d->next = NULL;
+            d->table_size = numOfWordsPerSize[index];
+            d->word_size = index;
+            d->table = (char **)malloc(d->table_size * sizeof(char *));
+            if (d->table == NULL)
+               exit(0);
          }
       }
    }
+   return head;
+}
+
+void freeDict(dict *head)
+{
+   // Desalocar as proprias structs e as tabelas!!
 }

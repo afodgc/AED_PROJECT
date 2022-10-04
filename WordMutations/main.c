@@ -19,9 +19,8 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    /*frees*/
     free(file_pals);
     freeProblem(problem_head);
-
+    // freeDict(dict_head);
     return EXIT_SUCCESS;
 }

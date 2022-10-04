@@ -18,5 +18,7 @@ void swapWords(char *first, char *second);
 
 int *contadorDePalvaras(FILE *file_dict);
 dict *dict_init(char *file_dict_name);
+dict *aloc_dict(int *numOfWordsPerSize, dict *head);
+void freeDict(dict *head);
 
 #endif
