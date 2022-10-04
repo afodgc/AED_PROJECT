@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "dicionario.h"
 
 #define MAX_lEN_WORDS 100
 
