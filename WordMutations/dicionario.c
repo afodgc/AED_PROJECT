@@ -1,5 +1,7 @@
 #include "headers.h"
 
+#define MAX_lEN_WORDS 100
+
 
 /******************************************************
  * quicksort()
@@ -55,4 +57,34 @@ void swapWords(char *first, char *second){
     strcpy(second, temp);
 
     return;
+}
+
+
+/**************************************************************************************************
+ * contadorDePalvaras()
+ * 
+ * argumets:
+ *          FILE *file_dict:  ponteiro para o ficheiro com o dicionário
+ * 
+ * return: int *numeroPalavrasPorTamanho: contem o numero de palavras para cada tamanho de palavra,
+ *                                        sendo o indice igual ao tamanho das palavras contadas
+ * 
+ * side efects: numeroPalavrasPorTamanho alocado (deverá ser libertado posteriormente)
+ *************************************************************************************************/
+int *contadorDePalvaras(FILE *file_dict){
+   int *numeroPalavrasPorTamanho = NULL, tamanho;
+   char temporario[100];
+
+   numeroPalavrasPorTamanho = (int *)malloc(sizeof(int) * MAX_lEN_WORDS);
+
+   //lé todas as palavras do ficheiro e contas por tamanho
+   while (fscanf(file_dict, "%s", temporario) == 1)
+   {
+      tamanho = strlen(temporario);
+      numeroPalavrasPorTamanho[tamanho]++;
+   }
+   
+   fseek(file_dict ,0 ,SEEK_SET ); //mete o ponteiro do ficheiro a apontar para o inicio od ficheiro
+
+   return numeroPalavrasPorTamanho;
 }
