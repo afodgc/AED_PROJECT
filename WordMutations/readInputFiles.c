@@ -17,11 +17,7 @@ FILE *openFile(char *file_pals, char *mode)
 
     if (fp == NULL)
         exit(0);
-<<<<<<< HEAD
-=======
-
->>>>>>> 6b9f343fef9e8f093b91dc935cc6e0080c28496c
-
+        
     return fp;
 }
 
