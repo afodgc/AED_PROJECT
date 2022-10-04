@@ -17,6 +17,10 @@ FILE *openFile(char *file_pals, char *mode)
 
     if (fp == NULL)
         exit(0);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6b9f343fef9e8f093b91dc935cc6e0080c28496c
 
     return fp;
 }
@@ -44,10 +48,12 @@ void freeProblem(problem *head)
  *
  * side efects: função que lê e guarda numa lista todos os dados dos problemas a serem executados
  *************************************************************************************************/
+
 problem *readProblemFile(char *file_pals, problem *head)
 {
     FILE *fp;
     problem *aux, *p;
+
 
     fp = openFile(file_pals, "r");
 
