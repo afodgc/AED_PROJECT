@@ -4,7 +4,7 @@ FLAGS = -g -Wall
 ARGS = teste.dict dandaan.pals
 
 all:
-	$(CC) $(FLAGS) -o $(TARGET) main.c arguments.c readInputFiles.c
+	$(CC) $(FLAGS) -o $(TARGET) main.c arguments.c readInputFiles.c dicionario.c
 
 clean:
 	rm -rf *.o

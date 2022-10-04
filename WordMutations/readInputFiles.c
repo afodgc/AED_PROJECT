@@ -16,8 +16,11 @@ FILE *openFile(char *file_pals, char *mode)
     fp = fopen(file_pals, mode);
 
     if (fp == NULL)
+    {
+        // funçao que dê free em tudo
         exit(0);
-        
+    }
+
     return fp;
 }
 
@@ -28,7 +31,7 @@ void freeProblem(problem *head)
     while (head != NULL)
     {
         aux = head;
-        // printf("%s %s %d", head->starting_word, head->arrival_word, head->game_mode);
+        // printf("%s %s %d\n", head->starting_word, head->arrival_word, head->game_mode);
         head = aux->next;
         free(aux);
     }
@@ -49,7 +52,6 @@ problem *readProblemFile(char *file_pals, problem *head)
 {
     FILE *fp;
     problem *aux, *p;
-
 
     fp = openFile(file_pals, "r");
 
