@@ -110,27 +110,42 @@ void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
         }
         else
         {
-            fprintf(fp_out, "%s %s %d", aux_problem_head->starting_word, aux_problem_head->arrival_word, aux_problem_head->game_mode);
+            fprintf(fp_out, "%s %s %d\n", aux_problem_head->starting_word, aux_problem_head->arrival_word, aux_problem_head->game_mode);
         }
+
         fprintf(fp_out, "\n");
         aux_problem_head = aux_problem_head->next;
     }
 
     free(file_out);
     fclose(fp_out);
+    return;
 }
 
 // dizer o tamanho da tabela
 void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_word_size)
 {
     dict *aux_dict = dict_head;
+    int starting_index = 0, arrival_index = 0;
 
     while (aux_dict != NULL)
     {
         if (aux_dict->word_size == problem_word_size)
         {
-            fprintf(file_out, "%s %d\n", problem->starting_word, aux_dict->table_size);
-            return;
+            // ver se as palavras existem
+            starting_index = binaryScr(aux_dict->table, 0, aux_dict->table_size - 1, problem->starting_word);
+            arrival_index = binaryScr(aux_dict->table, 0, aux_dict->table_size - 1, problem->arrival_word);
+            if (starting_index == -1 || arrival_index == -1)
+            {
+                // problema mal definido
+                fprintf(file_out, "%s %s %d\n", problem->starting_word, problem->arrival_word, problem->game_mode);
+                return;
+            }
+            else
+            {
+                fprintf(file_out, "%s %d\n", problem->starting_word, aux_dict->table_size);
+                return;
+            }
         }
 
         aux_dict = aux_dict->next;
@@ -153,7 +168,7 @@ void gameMode2(dict *dict_head, problem *problem, FILE *file_out, int problem_wo
             if (starting_index == -1 || arrival_index == -1)
             {
                 // problema mal definido
-                fprintf(file_out, "%s %s %d", problem->starting_word, problem->arrival_word, problem->game_mode);
+                fprintf(file_out, "%s %s %d\n", problem->starting_word, problem->arrival_word, problem->game_mode);
                 return;
             }
             else
