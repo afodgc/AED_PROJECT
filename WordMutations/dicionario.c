@@ -171,7 +171,7 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
 {
    char word[MAX_LEN_WORDS];
    int word_size = 0;
-   dict *aux_head, *temp;
+   dict *aux_head = NULL, *temp = NULL;
 
    while ((fscanf(fp_dict, "%s", word)) == 1)
    {
@@ -186,6 +186,9 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
       }
       // a lista que queremos alterar está em aux_head
       aux_head->table[aux_head->table_size] = (char *)malloc(sizeof(char) * (word_size + 1));
+      if (aux_head->table[aux_head->table_size] == NULL)
+         exit(0);
+
       strcpy(aux_head->table[aux_head->table_size], word);
       (aux_head->table_size)++;
    }
@@ -195,7 +198,7 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
 
 void freeDict(dict *head)
 {
-   dict *aux_head, *temp;
+   dict *aux_head = NULL, *temp = NULL;
    aux_head = head;
    while (aux_head != NULL)
    {

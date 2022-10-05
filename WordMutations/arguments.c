@@ -15,7 +15,7 @@
 char *get_arguments(int argc, char **argv, char *file_name, char extension[])
 {
 
-    char *dict_extension = NULL; // extenção que argumeto tem
+    char *file_extension = NULL; // extenção que argumeto tem
     int argument_size = 0;       // tamanho do argumeto
     int index = 0;               // variavel que diz qual o argumeto a ser analisado(1 ou 2)
     int i = 0;
@@ -40,29 +40,38 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
     if (argument_size < 5)
         exit(0);
 
-    dict_extension = (char *)malloc(sizeof(char) * (5 + 1));
+    file_extension = (char *)malloc(sizeof(char) * (5 + 1)); // extensao tem tamanho 5 + '\0'
 
-    if (dict_extension == NULL)
+    if (file_extension == NULL)
         exit(0);
 
+    // sacar estensao do nome do ficheiro
     for (i = argument_size - 5, k = 0; i < argument_size; i++, k++)
     {
-        dict_extension[k] = argv[index][i];
+        file_extension[k] = argv[index][i];
     }
-    dict_extension[k] = '\0';
+    file_extension[k] = '\0';
 
-    if (strcmp(dict_extension, extension) != 0)
+    // ver se é a extensao que queremos
+    if (strcmp(file_extension, extension) != 0)
     {
-        free(dict_extension);
+        free(file_extension);
         exit(0);
     }
 
     if (index == 1)
     {
-        free(dict_extension);
+        free(file_extension);
+        if (checkIfFileExists(argv[index]) == 0) // se nao existir damos exit
+            exit(0);
         return file_name; // no .dict nao precisamos do nome
     }
 
+    if (checkIfFileExists(argv[index]) == 0)
+    { // se o ficheiro nao existir
+        free(file_extension);
+        exit(0);
+    }
     file_name = (char *)malloc(sizeof(char) * (argument_size - 5 + 1)); //-5 por causa da .dict e +1 por causa do '/0'
     if (file_name == NULL)
         exit(0);
@@ -74,6 +83,16 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
     }
     file_name[i] = '\0';
 
-    free(dict_extension);
+    free(file_extension);
     return file_name;
+}
+
+int checkIfFileExists(char *file_name)
+{
+    FILE *fp = NULL;
+    fp = fopen(file_name, "r");
+    if (fp == NULL)
+        return 0; // nao existe
+    fclose(fp);
+    return 1; // existe
 }

@@ -18,5 +18,6 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[]);
 FILE *openFile(char *file_pals, char *mode);
 problem *readProblemFile(char *file_pals, problem *head);
 void freeProblem(problem *head);
+int checkIfFileExists(char *file_name);
 
 #endif
