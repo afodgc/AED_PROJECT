@@ -123,16 +123,17 @@ void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
         starting_word_size = strlen(aux_problem_head->starting_word);
         arrival_word_size = strlen(aux_problem_head->arrival_word);
 
-        if (aux_problem_head->game_mode == 1 && (starting_word_size == arrival_word_size))
+        if ((aux_problem_head->game_mode == 1) && (starting_word_size == arrival_word_size))
         {
             gameMode1(dict_head, aux_problem_head, fp_out, starting_word_size);
         }
-        else if (aux_problem_head->game_mode == 2 && (starting_word_size == arrival_word_size))
+        else if ((aux_problem_head->game_mode == 2) && (starting_word_size == arrival_word_size))
         {
             gameMode2(dict_head, aux_problem_head, fp_out, starting_word_size);
         }
         else
         {
+            // problema mal definido
             fprintf(fp_out, "%s %s %d\n", aux_problem_head->starting_word, aux_problem_head->arrival_word, aux_problem_head->game_mode);
         }
 
@@ -145,20 +146,19 @@ void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
     return;
 }
 
-
 /******************************************************************************************************************
  * gameMode1()
- * 
+ *
  * arguments:
  *          dict *dict_head:       lista de tabelas de dicionários
  *          problem *problem:      lista de problemas
  *          FILE *file_out:        ponteiro para o ficheiro de saida
  *          int problem_word_size: tamanho das palavras do problema
- * 
+ *
  * return: void
- * 
- * side efects: função que resolve os problemas com gamemod=1 
- *              caso as palavras do problema se encontrem numa das tabelas de dicinários 
+ *
+ * side efects: função que resolve os problemas com gamemod=1
+ *              caso as palavras do problema se encontrem numa das tabelas de dicinários
  *              dá print do numero de palavras nessa tabela
  *******************************************************************************************************************/
 void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_word_size)
@@ -191,19 +191,18 @@ void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_wo
     return;
 }
 
-
 /******************************************************************************************************************
  * gameMode2()
- * 
+ *
  * arguments:
  *          dict *dict_head:       lista de tabelas de dicionários
  *          problem *problem:      lista de problemas
  *          FILE *file_out:        ponteiro para o ficheiro de saida
  *          int problem_word_size: tamanho das palavras do problema
- * 
+ *
  * return: void
- * 
- * side efects: função que resolve os problemas com gamemod=2 
+ *
+ * side efects: função que resolve os problemas com gamemod=2
  *              caso as palavras do problema se encontrem numa das tabelas de dicinários dá print da seu index
  *******************************************************************************************************************/
 void gameMode2(dict *dict_head, problem *problem, FILE *file_out, int problem_word_size)
