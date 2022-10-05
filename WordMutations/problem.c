@@ -123,7 +123,22 @@ void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
     return;
 }
 
-// dizer o tamanho da tabela
+
+/******************************************************************************************************************
+ * gameMode1()
+ * 
+ * arguments:
+ *          dict *dict_head:       lista de tabelas de dicionários
+ *          problem *problem:      lista de problemas
+ *          FILE *file_out:        ponteiro para o ficheiro de saida
+ *          int problem_word_size: tamanho das palavras do problema
+ * 
+ * return: void
+ * 
+ * side efects: função que resolve os problemas com gamemod=1 
+ *              caso as palavras do problema se encontrem numa das tabelas de dicinários 
+ *              dá print do numero de palavras nessa tabela
+ *******************************************************************************************************************/
 void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_word_size)
 {
     dict *aux_dict = dict_head;
@@ -154,7 +169,21 @@ void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_wo
     return;
 }
 
-// dizer a posiçao de cada palavra
+
+/******************************************************************************************************************
+ * gameMode2()
+ * 
+ * arguments:
+ *          dict *dict_head:       lista de tabelas de dicionários
+ *          problem *problem:      lista de problemas
+ *          FILE *file_out:        ponteiro para o ficheiro de saida
+ *          int problem_word_size: tamanho das palavras do problema
+ * 
+ * return: void
+ * 
+ * side efects: função que resolve os problemas com gamemod=2 
+ *              caso as palavras do problema se encontrem numa das tabelas de dicinários dá print da seu index
+ *******************************************************************************************************************/
 void gameMode2(dict *dict_head, problem *problem, FILE *file_out, int problem_word_size)
 {
     dict *aux_dict = dict_head;

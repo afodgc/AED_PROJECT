@@ -1,7 +1,7 @@
 #include "dicionario.h"
 #include "headers.h"
 
-/******************************************************
+/*******************************************************************************
  * quicksort()
  *
  * argumets:
@@ -12,7 +12,7 @@
  * return: void
  *
  * side efects: ordena as palavras de um dicionario com palavras do mesmo tamanho
- *****************************************************/
+ ********************************************************************************/
 void quicksort(char **dicionario, int first, int last)
 {
    int i, j, pivot;
@@ -40,7 +40,7 @@ void quicksort(char **dicionario, int first, int last)
    }
 }
 
-/******************************************************
+/*****************************************************************
  * quicksort()
  *
  * argumets:
@@ -50,7 +50,7 @@ void quicksort(char **dicionario, int first, int last)
  * return: void
  *
  * side efects: troca duas palavras de uma tabela de palavras
- *****************************************************/
+ *****************************************************************/
 void swapWords(char *first, char *second)
 {
    char temp[100];
@@ -129,11 +129,17 @@ dict *dict_init(char *file_dict_name)
    return head;
 }
 
-/****************************************
+/**********************************************************************************
  * aloc_dict()
  *
- *
- ****************************************/
+ * arguments: 
+ *           int *numOfWordsPerSize: vetor com o numero de palavras por tamanho 
+ *           dict *head:             ponteiro para a cabeça de lista do dicionário
+ * 
+ * return:   dict *head: retorna a cabeça da lista   
+ * 
+ * side efects: aloca a memoria necessaria para todas as tabelas de palavras 
+ *********************************************************************************/
 dict *aloc_dict(int *numOfWordsPerSize, dict *head)
 {
    dict *d = NULL, *aux = NULL;
