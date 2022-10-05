@@ -1,6 +1,6 @@
 CC = gcc
 TARGET = wrdmttns
-FLAGS = -Wall -std=c99 -O3 -pg
+FLAGS = -Wall -std=c99 -O3 
 ARGS = 
 
 all:
