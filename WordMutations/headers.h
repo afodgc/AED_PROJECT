@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_STR 30
+#include "dicionario.h" //pode-se fazer isto???
 
 typedef struct _problem
 {
@@ -19,5 +20,7 @@ FILE *openFile(char *file_pals, char *mode);
 problem *readProblemFile(char *file_pals, problem *head);
 void freeProblem(problem *head);
 int checkIfFileExists(char *file_name);
+
+void solveProblem(dict *dict_head, problem *problem_head, char *file_out);
 
 #endif

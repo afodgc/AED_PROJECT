@@ -6,7 +6,6 @@ int main(int argc, char **argv)
     problem *problem_head = NULL; /*struct que guarda todos os dados via input sobre o problema*/
     dict *dict_head = NULL;
     char *file_dict = NULL, *file_pals = NULL; /*nome dos ficheiros de input*/
-    int index = 0;
 
     /*verificação se os ficheiros de input tem a extensão correta*/
     char extension[] = ".dict";
@@ -20,8 +19,7 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    index = binaryScr(dict_head->table, 0, dict_head->table_size, "abas");
-    //printf("%i\n", index);
+    solveProblem(dict_head, problem_head, file_pals);
 
     free(file_pals);
     freeProblem(problem_head);
