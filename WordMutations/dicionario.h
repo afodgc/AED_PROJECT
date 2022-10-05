@@ -22,5 +22,6 @@ dict *dict_init(char *file_dict_name);
 dict *aloc_dict(int *numOfWordsPerSize, dict *head);
 dict *aloc_dict_words(dict *head, FILE *fp_dict);
 void freeDict(dict *head);
+int binaryScr(char **table, int low, int high, char *palavra);
 
 #endif
