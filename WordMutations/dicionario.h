@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX_LEN_WORDS 100
 
 typedef struct _dict
 {
@@ -19,6 +20,7 @@ void swapWords(char *first, char *second);
 int *contadorDePalvaras(FILE *file_dict);
 dict *dict_init(char *file_dict_name);
 dict *aloc_dict(int *numOfWordsPerSize, dict *head);
+dict *aloc_dict_words(dict *head, FILE *fp_dict);
 void freeDict(dict *head);
 
 #endif

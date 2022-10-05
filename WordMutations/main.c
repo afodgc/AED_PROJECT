@@ -19,8 +19,13 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
+    // for (int i = 0; i < dict_head->table_size; i++)
+    // {
+    //     printf("%s\n", dict_head->table[i]);
+    // }
+
     free(file_pals);
     freeProblem(problem_head);
-    // freeDict(dict_head);
+    freeDict(dict_head);
     return EXIT_SUCCESS;
 }
