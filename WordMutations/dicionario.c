@@ -221,3 +221,39 @@ void freeDict(dict *head)
       free(temp);
    }
 }
+
+
+
+/**************************************************
+ * binaryScr()
+ * 
+ * argumets:
+ *          int low:       index do menor elemento
+ *          int high:      index do maior elemento
+ *          char *palavra: palavra a ser encontrada
+ * 
+ * return: retorna -1 se não encontrar a palavra ou o index da palavra se a encontrar
+ * 
+ * side efects: função que procura o index de uma palavra numa tablea ordenada alfabeticamente
+ *************************************************/
+int binaryScr(char **table, int low, int high, char *palavra)
+{
+   int mid, cmp; //valor médio entre  low e o high
+
+   if (high >= low) {
+      mid = low + (high - low) / 2;
+      cmp = strcmp(table[mid], palavra);
+
+      // se encontrar a palavra retorna o index
+      if (cmp == 0)     
+         return mid;
+
+      // se a palavra estiver mais à frente por ordem alfabética, vai procurar na metade mais à frente do meio
+      if(cmp > 0)       
+         return binaryScr(table, low, mid - 1, palavra);
+      // se a palavra estiver mais para trás por ordem alfabética, vai procurar na metade à trás fo meio
+      else              
+         return binaryScr(table, mid + 1, high, palavra);
+   }
+   return -1;
+}
