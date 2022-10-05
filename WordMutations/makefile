@@ -1,6 +1,6 @@
 CC = gcc
 TARGET = wrdmttns
-FLAGS = -g -Wall
+FLAGS = -Wall -std=c99 -O3
 ARGS = teste.dict dandaan.pals
 
 all:

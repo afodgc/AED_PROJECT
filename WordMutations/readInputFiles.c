@@ -51,7 +51,7 @@ void freeProblem(problem *head)
 problem *readProblemFile(char *file_pals, problem *head)
 {
     FILE *fp;
-    problem *aux, *p;
+    problem *aux = NULL, *p = NULL;
 
     fp = openFile(file_pals, "r");
 
@@ -74,8 +74,8 @@ problem *readProblemFile(char *file_pals, problem *head)
         p->next = NULL;
     }
 
-    aux->next = NULL;
-    free(p); // dar free no último que alocamos mas não vamos usar
+    aux->next = NULL; // WARNING MAY BE USED UNINITIALIZADED
+    free(p);          // dar free no último que alocamos mas não vamos usar
     fclose(fp);
     return head;
 }

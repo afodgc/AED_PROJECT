@@ -127,7 +127,7 @@ dict *dict_init(char *file_dict_name)
  ****************************************/
 dict *aloc_dict(int *numOfWordsPerSize, dict *head)
 {
-   dict *d, *aux;
+   dict *d = NULL, *aux = NULL;
 
    for (int index = 0; index < MAX_LEN_WORDS; index++)
    {
