@@ -87,6 +87,17 @@ char *get_arguments(int argc, char **argv, char *file_name, char extension[])
     return file_name;
 }
 
+
+/**********************************************************************
+ * checkIfFileExists()
+ * 
+ * argumets:   
+ *          char *file_name: nome do ficheiro
+ * 
+ * return:  retorna 1 se existir ou 0 se não existir
+ * 
+ * side efects: função que verifica se o ficheiro existe 
+ **********************************************************************/
 int checkIfFileExists(char *file_name)
 {
     FILE *fp = NULL;
