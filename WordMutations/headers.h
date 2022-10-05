@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX_STR 30
+#define MAX_STR 100
 #include "dicionario.h" //pode-se fazer isto???
 
 typedef struct _problem

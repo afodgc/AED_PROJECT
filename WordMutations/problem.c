@@ -100,16 +100,17 @@ void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
         starting_word_size = strlen(aux_problem_head->starting_word);
         arrival_word_size = strlen(aux_problem_head->arrival_word);
 
-        if (aux_problem_head->game_mode == 1 && (starting_word_size == arrival_word_size))
+        if ((aux_problem_head->game_mode == 1) && (starting_word_size == arrival_word_size))
         {
             gameMode1(dict_head, aux_problem_head, fp_out, starting_word_size);
         }
-        else if (aux_problem_head->game_mode == 2 && (starting_word_size == arrival_word_size))
+        else if ((aux_problem_head->game_mode == 2) && (starting_word_size == arrival_word_size))
         {
             gameMode2(dict_head, aux_problem_head, fp_out, starting_word_size);
         }
         else
         {
+            // problema mal definido
             fprintf(fp_out, "%s %s %d\n", aux_problem_head->starting_word, aux_problem_head->arrival_word, aux_problem_head->game_mode);
         }
 
