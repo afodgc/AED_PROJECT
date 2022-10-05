@@ -33,7 +33,8 @@ void quicksort(char **dicionario, int first, int last)
             swapWords(dicionario[i], dicionario[j]);
          }
       }
-      swapWords(dicionario[pivot], dicionario[j]);
+      if (pivot != j)
+         swapWords(dicionario[pivot], dicionario[j]);
       quicksort(dicionario, first, j - 1);
       quicksort(dicionario, j + 1, last);
    }
@@ -105,7 +106,7 @@ dict *dict_init(char *file_dict_name)
 {
    FILE *fp_dict = NULL;
    int *numOfWordsPerSize = NULL;
-   dict *head = NULL;
+   dict *head = NULL, *aux_head = NULL;
 
    fp_dict = openFile(file_dict_name, "r");
 
@@ -113,6 +114,14 @@ dict *dict_init(char *file_dict_name)
 
    head = aloc_dict(numOfWordsPerSize, head);
    head = aloc_dict_words(head, fp_dict);
+
+   aux_head = head;
+
+   while (aux_head != NULL)
+   {
+      quicksort(aux_head->table, 0, aux_head->table_size - 1); // ordenação
+      aux_head = aux_head->next;
+   }
 
    free(numOfWordsPerSize);
    fclose(fp_dict);
