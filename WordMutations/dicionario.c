@@ -182,6 +182,17 @@ dict *aloc_dict(int *numOfWordsPerSize, dict *head)
    return head;
 }
 
+/*********************************************************************************************
+ * aloc_dict_words()
+ * 
+ * arguments:
+ *            dict *head:    cabeça da lista de tabelas do dicionário
+ *            FILE *fp_dict: ficheiro do dicionário já aberto 
+ * 
+ * return: retorna a cabeça da lista do dicionário
+ * 
+ * side efects: aloca espaço para as palavras e preenche as tabelas de palavras do dicionário
+ **********************************************************************************************/
 dict *aloc_dict_words(dict *head, FILE *fp_dict)
 {
    char word[MAX_LEN_WORDS];
@@ -211,6 +222,15 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
    return head;
 }
 
+/**************************************************************
+ * freeDict()
+ * 
+ * argumets:
+ *           dict *head: cabeça da lista de tabelas de dicionários
+ * return: void
+ * 
+ * side efects: dá free a lista de tabelas do dicionário
+ *****************************************************************/
 void freeDict(dict *head)
 {
    dict *aux_head = NULL, *temp = NULL;
