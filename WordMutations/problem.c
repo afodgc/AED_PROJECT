@@ -25,6 +25,16 @@ FILE *openFile(char *file_pals, char *mode)
     return fp;
 }
 
+/******************************************************************
+ * freeProblem()
+ * 
+ * arguments:
+ *            problem *head: cabeça de lista da lista de problemas
+ * 
+ * return: void
+ * 
+ * side efects: dá free à lista de problemas inteira
+ ******************************************************************/
 void freeProblem(problem *head)
 {
     problem *aux;
@@ -81,6 +91,19 @@ problem *readProblemFile(char *file_pals, problem *head)
     return head;
 }
 
+
+/*********************************************************************************
+ * solveProblem()
+ * 
+ * arguments:
+ *           dict *dict_head:
+ *           problem *problem_head:
+ *           char *file_pals:
+ * 
+ * return: void
+ * 
+ * side efects: resolve todos os problemas dados pelo file_pals
+ ********************************************************************************/
 void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
 {
     problem *aux_problem_head = problem_head;
