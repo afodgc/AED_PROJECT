@@ -132,13 +132,13 @@ dict *dict_init(char *file_dict_name)
 /**********************************************************************************
  * aloc_dict()
  *
- * arguments: 
- *           int *numOfWordsPerSize: vetor com o numero de palavras por tamanho 
+ * arguments:
+ *           int *numOfWordsPerSize: vetor com o numero de palavras por tamanho
  *           dict *head:             ponteiro para a cabeça de lista do dicionário
- * 
- * return:   dict *head: retorna a cabeça da lista   
- * 
- * side efects: aloca a memoria necessaria para todas as tabelas de palavras 
+ *
+ * return:   dict *head: retorna a cabeça da lista
+ *
+ * side efects: aloca a memoria necessaria para todas as tabelas de palavras
  *********************************************************************************/
 dict *aloc_dict(int *numOfWordsPerSize, dict *head)
 {
@@ -184,20 +184,20 @@ dict *aloc_dict(int *numOfWordsPerSize, dict *head)
 
 /*********************************************************************************************
  * aloc_dict_words()
- * 
+ *
  * arguments:
  *            dict *head:    cabeça da lista de tabelas do dicionário
- *            FILE *fp_dict: ficheiro do dicionário já aberto 
- * 
+ *            FILE *fp_dict: ficheiro do dicionário já aberto
+ *
  * return: retorna a cabeça da lista do dicionário
- * 
+ *
  * side efects: aloca espaço para as palavras e preenche as tabelas de palavras do dicionário
  **********************************************************************************************/
 dict *aloc_dict_words(dict *head, FILE *fp_dict)
 {
    char word[MAX_LEN_WORDS];
    int word_size = 0;
-   dict *aux_head = NULL, *temp = NULL;
+   dict *aux_head = NULL;
 
    while ((fscanf(fp_dict, "%s", word)) == 1)
    {
@@ -207,8 +207,7 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
       // temos de encontrar a lista que tenha o tamanho destas palavras
       while (aux_head->word_size != word_size)
       {
-         temp = aux_head;
-         aux_head = temp->next;
+         aux_head = aux_head->next;
       }
       // a lista que queremos alterar está em aux_head
       aux_head->table[aux_head->table_size] = (char *)malloc(sizeof(char) * (word_size + 1));
@@ -224,11 +223,11 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
 
 /**************************************************************
  * freeDict()
- * 
+ *
  * argumets:
  *           dict *head: cabeça da lista de tabelas de dicionários
  * return: void
- * 
+ *
  * side efects: dá free a lista de tabelas do dicionário
  *****************************************************************/
 void freeDict(dict *head)
@@ -248,37 +247,36 @@ void freeDict(dict *head)
    }
 }
 
-
-
 /**************************************************
  * binaryScr()
- * 
+ *
  * argumets:
  *          int low:       index do menor elemento
  *          int high:      index do maior elemento
  *          char *palavra: palavra a ser encontrada
- * 
+ *
  * return: retorna -1 se não encontrar a palavra ou o index da palavra se a encontrar
- * 
+ *
  * side efects: função que procura o index de uma palavra numa tablea ordenada alfabeticamente
  *************************************************/
 int binaryScr(char **table, int low, int high, char *palavra)
 {
-   int mid, cmp; //valor médio entre  low e o high
+   int mid, cmp; // valor médio entre  low e o high
 
-   if (high >= low) {
+   if (high >= low)
+   {
       mid = low + (high - low) / 2;
       cmp = strcmp(table[mid], palavra);
 
       // se encontrar a palavra retorna o index
-      if (cmp == 0)     
+      if (cmp == 0)
          return mid;
 
       // se a palavra estiver mais à frente por ordem alfabética, vai procurar na metade mais à frente do meio
-      if(cmp > 0)       
+      if (cmp > 0)
          return binaryScr(table, low, mid - 1, palavra);
       // se a palavra estiver mais para trás por ordem alfabética, vai procurar na metade à trás fo meio
-      else              
+      else
          return binaryScr(table, mid + 1, high, palavra);
    }
    return -1;

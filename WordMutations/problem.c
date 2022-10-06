@@ -27,12 +27,12 @@ FILE *openFile(char *file_pals, char *mode)
 
 /******************************************************************
  * freeProblem()
- * 
+ *
  * arguments:
  *            problem *head: cabeça de lista da lista de problemas
- * 
+ *
  * return: void
- * 
+ *
  * side efects: dá free à lista de problemas inteira
  ******************************************************************/
 void freeProblem(problem *head)
@@ -91,17 +91,16 @@ problem *readProblemFile(char *file_pals, problem *head)
     return head;
 }
 
-
 /*********************************************************************************
  * solveProblem()
- * 
+ *
  * arguments:
  *           dict *dict_head:
  *           problem *problem_head:
  *           char *file_pals:
- * 
+ *
  * return: void
- * 
+ *
  * side efects: resolve todos os problemas dados pelo file_pals
  ********************************************************************************/
 void solveProblem(dict *dict_head, problem *problem_head, char *file_pals)
@@ -188,6 +187,10 @@ void gameMode1(dict *dict_head, problem *problem, FILE *file_out, int problem_wo
 
         aux_dict = aux_dict->next;
     }
+
+    // o tamanho dos pares de palavras nao existe no dic
+    fprintf(file_out, "%s %s %d\n", problem->starting_word, problem->arrival_word, problem->game_mode);
+
     return;
 }
 
@@ -230,5 +233,8 @@ void gameMode2(dict *dict_head, problem *problem, FILE *file_out, int problem_wo
         }
         aux_dict = aux_dict->next;
     }
+    
+    // o tamanho dos pares de palavras nao existe no dic
+    fprintf(file_out, "%s %s %d\n", problem->starting_word, problem->arrival_word, problem->game_mode);
     return;
 }
