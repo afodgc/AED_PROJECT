@@ -43,7 +43,7 @@ void solveProblem(dict *dict_head, char *file_out_sem_extencao, char *file_pals)
     FILE *fp_out, *fp_in;       // ponteiros para os ficheiros
     int starting_word_size = 0; // tamanho da primeira palavra do problema
     int arrival_word_size = 0;  // tamanho da segunda palavra do problema
-    problem problem;            // estrotura que guarda o problema
+    problem problem;            // estrutura que guarda o problema
 
     // criação do nome do ficheiro de saida
     char *file_out = (char *)malloc(sizeof(char) * (strlen(file_out_sem_extencao) + strlen(".stats") + 1));
