@@ -25,7 +25,6 @@ FILE *openFile(char *file_pals, char *mode)
     return fp;
 }
 
-
 /*********************************************************************************
  * solveProblem()
  *
@@ -40,33 +39,32 @@ FILE *openFile(char *file_pals, char *mode)
  ********************************************************************************/
 void solveProblem(dict *dict_head, char *file_out_sem_extencao, char *file_pals)
 {
-    //declaração de variaveis
-    FILE *fp_out, *fp_in;        //ponteiros para os ficheiros
-    int starting_word_size = 0;  //tamanho da primeira palavra do problema
-    int arrival_word_size = 0;   //tamanho da segunda palavra do problema
-    problem problem;             //estrotura que guarda o problema
+    // declaração de variaveis
+    FILE *fp_out, *fp_in;       // ponteiros para os ficheiros
+    int starting_word_size = 0; // tamanho da primeira palavra do problema
+    int arrival_word_size = 0;  // tamanho da segunda palavra do problema
+    problem problem;            // estrotura que guarda o problema
 
-
-    //criação do nome do ficheiro de saida
-    char *file_out = (char *)malloc(sizeof(char) * (strlen(file_pals) + strlen(".stats") + 1));
-    if (file_out == NULL) {
+    // criação do nome do ficheiro de saida
+    char *file_out = (char *)malloc(sizeof(char) * (strlen(file_out_sem_extencao) + strlen(".stats") + 1));
+    if (file_out == NULL)
+    {
         exit(0);
     }
 
     strcpy(file_out, file_out_sem_extencao);
     strcat(file_out, ".stats");
 
-    //abertura de ficheiros
+    // abertura de ficheiros
     fp_out = openFile(file_out, "w");
     fp_in = openFile(file_pals, "r");
 
-    //leitura dos problemas e resolução
+    // leitura dos problemas e resolução
     while ((fscanf(fp_in, "%s %s %d", problem.starting_word, problem.arrival_word, &(problem.game_mode)) == 3))
     {
         starting_word_size = strlen(problem.starting_word);
         arrival_word_size = strlen(problem.arrival_word);
 
-        
         if ((problem.game_mode == 1) && (starting_word_size == arrival_word_size))
         {
             gameMode1(dict_head, problem, fp_out, starting_word_size);
@@ -82,7 +80,6 @@ void solveProblem(dict *dict_head, char *file_out_sem_extencao, char *file_pals)
         }
 
         fprintf(fp_out, "\n");
-        printf("1\n");
     }
 
     free(file_out);
@@ -179,7 +176,7 @@ void gameMode2(dict *dict_head, problem problem, FILE *file_out, int problem_wor
         }
         aux_dict = aux_dict->next;
     }
-    
+
     // o tamanho dos pares de palavras nao existe no dic
     fprintf(file_out, "%s %s %d\n", problem.starting_word, problem.arrival_word, problem.game_mode);
     return;

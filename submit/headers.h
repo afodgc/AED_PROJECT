@@ -20,7 +20,7 @@ problem *readProblemFile(char *file_pals, problem *head);
 void freeProblem(problem *head);
 int checkIfFileExists(char *file_name);
 
-void solveProblem(dict *dict_head, char *file_out_sem_extençao, char *file_pals);
+void solveProblem(dict *dict_head, char *file_out_sem_extencao, char *file_pals);
 void gameMode1(dict *dict_head, problem problem, FILE *file_out, int problem_word_size);
 void gameMode2(dict *dict_head, problem problem, FILE *file_out, int problem_word_size);
 
