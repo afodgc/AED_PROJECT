@@ -11,15 +11,16 @@ typedef struct
 {
     char starting_word[MAX_STR];
     char arrival_word[MAX_STR];
-    int game_mode;
+    int numOfmutations;
 } problem;
 
 char *get_arguments(int argc, char **argv, char *file_name, char extension[]);
 FILE *openFile(char *file_pals, char *mode);
 int checkIfFileExists(char *file_name);
 
-void solveProblem(dict *dict_head, char *file_out_sem_extencao, char *file_pals);
-void gameMode1(dict *dict_head, problem problem, FILE *file_out, int problem_word_size);
-void gameMode2(dict *dict_head, problem problem, FILE *file_out, int problem_word_size);
+void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals);
+
+char *createOutput(char *name);
+void checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout);
 
 #endif
