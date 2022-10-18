@@ -1,5 +1,6 @@
 #include "headers.h"
 #include "dicionario.h"
+#include "graph.h"
 
 int main(int argc, char **argv)
 {
@@ -15,11 +16,9 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    //TO-DO: aloc grafo
+    // TO-DO: aloc grafo
 
-    //TO-DO:   solve problem
-
-
+    // TO-DO:   solve problem
 
     free(file_pals_sem_extencao);
     freeDict(dict_head);
