@@ -15,7 +15,6 @@ typedef struct _dict
 } dict;
 
 void quicksort(char **dicionario, int first, int last);
-void swapWords(char *first, char *second);
 
 int binaryScr(char **table, int low, int high, char *palavra);
 

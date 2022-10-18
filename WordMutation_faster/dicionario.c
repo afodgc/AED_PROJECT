@@ -16,6 +16,7 @@
 void quicksort(char **dicionario, int first, int last)
 {
    int i, j, pivot;
+   char *tmp;
 
    if (first < last)
    {
@@ -30,37 +31,23 @@ void quicksort(char **dicionario, int first, int last)
             j--;
          if (i < j)
          {
-            swapWords(dicionario[i], dicionario[j]);
+            tmp = dicionario[i];
+            dicionario[i] = dicionario[j];
+            dicionario[j] = tmp;
+            //swapWords(dicionario[i], dicionario[j]);
          }
       }
-      if (pivot != j)
-         swapWords(dicionario[pivot], dicionario[j]);
+      if (pivot != j){
+         tmp = dicionario[pivot];
+         dicionario[pivot] = dicionario[j];
+         dicionario[j] = tmp;
+      }
+         //swapWords(dicionario[pivot], dicionario[j]);
       quicksort(dicionario, first, j - 1);
       quicksort(dicionario, j + 1, last);
    }
 }
 
-/*****************************************************************
- * quicksort()
- *
- * argumets:
- *          char *first:  palavra que vai ser trocada
- *          char *second: palavra que vai ser trocada
- *
- * return: void
- *
- * side efects: troca duas palavras de uma tabela de palavras
- *****************************************************************/
-void swapWords(char *first, char *second)
-{
-   char temp[100];
-
-   strcpy(temp, first);
-   strcpy(first, second);
-   strcpy(second, temp);
-
-   return;
-}
 
 /**************************************************************************************************
  * contadorDePalvaras()
