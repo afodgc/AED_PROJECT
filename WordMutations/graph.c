@@ -16,7 +16,6 @@ node *newNode(int vertex, node *next)
 // inicializar o grafo
 graph *init_graph(int numOfVertices)
 {
-    int v;
     graph *G = (graph *)malloc(sizeof(graph));
     G->numOfVertices = numOfVertices;
     G->numOfEdges = 0;

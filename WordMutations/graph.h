@@ -7,6 +7,12 @@ typedef struct myedge
     int dest;
 } edge;
 
+typedef struct _node
+{
+    int vertex;
+    struct _node *next;
+} node;
+
 typedef struct mygraph
 {
     int numOfVertices;
@@ -15,12 +21,6 @@ typedef struct mygraph
     int numOfMutations;
     node **adjList;
 } graph;
-
-typedef struct _node
-{
-    int vertex;
-    struct _node *next;
-} node;
 
 graph *init_graph(int);
 void insert_edge(graph *, edge *);
