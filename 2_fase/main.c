@@ -15,7 +15,11 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    solveProblem(dict_head, file_pals_sem_extencao, argv[2]);
+    //TO-DO: aloc grafo
+
+    //TO-DO:   solve problem
+
+
 
     free(file_pals_sem_extencao);
     freeDict(dict_head);

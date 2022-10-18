@@ -25,3 +25,11 @@ FILE *openFile(char *file_pals, char *mode)
     return fp;
 }
 
+
+
+/* -------TO-DO------- solve problem*/
+
+    //while existir problemas para resolver
+        //verificar se as palavras tem o mesmo tamanho
+        //no inicio verificar se as palavras existem no dicionário
+        //algoritmo de procura do caminho mais cuto
