@@ -47,7 +47,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     fpIn = openFile(file_pals, "r");
     fpOut = openFile(file_out, "w");
 
-    while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, problem.numOfmutations)) == 3)
+    while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
         // se o problema estiver mal definido passamos ao próximo problema
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices) == 0)
@@ -118,14 +118,14 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             *destWordIndex = binaryScr(aux_dict->table, 0, aux_dict->table_size - 1, problem.arrival_word);
 
             // pelo menos uma das palavras não está no dict, logo o problema está mal definido
-            if (startWordIndex == -1 || destWordIndex == -1)
+            if (*startWordIndex == -1 || *destWordIndex == -1)
             {
                 fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
                 return 0;
             }
 
             // este é o caso de estarmos a procurar o caminho para a mesma palavra de chegada e partida, neste caso vamos dizer que o problema está mal definido para facilitar
-            if ((startWordIndex == destWordIndex) && startWordIndex != -1 && destWordIndex != -1)
+            if ((*startWordIndex == *destWordIndex) && *startWordIndex != -1 && *destWordIndex != -1)
             {
                 // as palavras sao iguais e existem no dict, logo o custo é 0
                 fprintf(fpout, "%s 0\n%s", problem.starting_word, problem.arrival_word);

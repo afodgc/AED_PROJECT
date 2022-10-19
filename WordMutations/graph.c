@@ -45,6 +45,33 @@ Nesta função vamos alocar a lista de adjacencias
 */
 Graph *aloc_adjList(Graph *g, dict *dict_head)
 {
+    dict *aux_dict = dict_head;
+
+    // descobrir o dicionario em que temos o tamanho de palavras correspondente
+    while (aux_dict != NULL)
+    {
+
+        if (aux_dict->word_size == g->wordSize)
+        {
+            // vamos percorrer palavra a palavra e comparar com todas as outras e descobrir as que estao conectadas
+            for (int i = 0; i < aux_dict->table_size - 1; i++)
+            {
+                for (int j = i + 1; j < aux_dict->table_size - 1; j++)
+                {
+
+                    if (compareTwoWords(aux_dict->table[i], aux_dict->table[j], g->numOfMutations) == 1)
+                    {
+                    }
+                }
+            }
+        }
+
+        aux_dict = aux_dict->next;
+    }
 
     return g;
+}
+
+int compareTwoWords(char *word1, char *word2, int numOfMutations)
+{
 }

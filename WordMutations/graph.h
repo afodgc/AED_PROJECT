@@ -31,7 +31,10 @@ void insert_edge(Graph *, edge *);
 void freeGraph(Graph *);
 
 Graph *aloc_adjList(Graph *, dict *dict_head);
+int compareTwoWords(char *word1, char *word2, int numOfMutations);
 
 node *newNode(int, node *);
+
+void dijkstra(int origem, int destino, Graph *grafo);
 
 #endif
