@@ -166,7 +166,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
  * return: void
  * side efects: dá print á resposta
  **************************************************/
-void printResposta(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
     /* caso nao exista caminho */
     if (resultado.custo == -1){
@@ -184,7 +184,7 @@ void printResposta(struct caminho_mais_curto resultado, int origem, int destino,
  * descricao: funcao recursiva que escreve todos os resulados de 
  *            um caminho mais curto menos o ultimo
  ********************************************************************/
-void printR(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
     if (resultado.ant[destino] == origem){
         fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);

@@ -6,6 +6,7 @@
 #include <string.h>
 #define MAX_STR 100
 #include "dicionario.h" //pode-se fazer isto???
+#include "graph.h"
 
 typedef struct
 {
@@ -23,7 +24,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals);
 char *createOutput(char *name);
 int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices);
 
-void printResposta(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
-void printR(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
+void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
 
 #endif
