@@ -71,6 +71,14 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     fclose(fpIn);
     fclose(fpOut);
     free(file_out);
+
+    for (int i = 0; i < numOfGraphs; i++)
+    {
+        freeGraph(graph[i]);
+        free(graph[i]->adjList);
+        free(graph[i]);
+    }
+    free(graph);
 }
 
 // criar nome do ficheiro de saida
@@ -100,7 +108,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
         return 0;
     }
 
-    // o numero de mutações indicadas não é válido
+    // o numero de mutações indicadas é inválido
     if (problem.numOfmutations < 1 && problem.numOfmutations > 3)
     {
         fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
@@ -116,6 +124,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             // vamos fazer procura binaria para encontrar o index das palavras, se nao existirem retorna -1
             *startWordIndex = binaryScr(aux_dict->table, 0, aux_dict->table_size - 1, problem.starting_word);
             *destWordIndex = binaryScr(aux_dict->table, 0, aux_dict->table_size - 1, problem.arrival_word);
+            *numOfVertices = aux_dict->table_size;
 
             // pelo menos uma das palavras não está no dict, logo o problema está mal definido
             if (*startWordIndex == -1 || *destWordIndex == -1)
@@ -147,14 +156,11 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     return 1;
 }
 
-
-
-
 /***************************************************
  * printResposta()
- * 
- * argumets: 
- *          resultado: contem:  
+ *
+ * argumets:
+ *          resultado: contem:
  *                              vetor com os antecessores de cada vertice(index da palavra no dicionario)
  *                              custo do menor caminho
  *          origem:  index da origem relativamente ao dicionário
@@ -162,11 +168,11 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
  *          *output: ponteiro para o ficheiro de saida
  *          problem: problema em causa
  *          *dict_head: dicionario com o tamanho de palavras em causa
- * 
+ *
  * return: void
  * side efects: dá print á resposta
  **************************************************/
-void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printResposta(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
     /* caso nao exista caminho */
     if (resultado.custo == -1){
@@ -184,14 +190,7 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
  * descricao: funcao recursiva que escreve todos os resulados de 
  *            um caminho mais curto menos o ultimo
  ********************************************************************/
-void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printR(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
-    if (resultado.ant[destino] == origem){
-        fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);
-    } else {
-        printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
-        fprintf(output, "%s", dict_head->table[resultado.ant[destino]]);
-    }
-
-    return;
-}
+//     return;
+// }

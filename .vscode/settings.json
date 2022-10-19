@@ -1,5 +1,6 @@
 {
-    "files.associations": {
-        "headers.h": "c"
-    }
+  "files.associations": {
+    "headers.h": "c",
+    "string.h": "c"
+  }
 }
