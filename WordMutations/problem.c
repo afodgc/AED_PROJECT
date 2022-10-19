@@ -146,3 +146,52 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
 
     return 1;
 }
+
+
+
+
+/***************************************************
+ * printResposta()
+ * 
+ * argumets: 
+ *          resultado: contem:  
+ *                              vetor com os antecessores de cada vertice(index da palavra no dicionario)
+ *                              custo do menor caminho
+ *          origem:  index da origem relativamente ao dicionário
+ *          destino: index da destino relativamente ao dicionário
+ *          *output: ponteiro para o ficheiro de saida
+ *          problem: problema em causa
+ *          *dict_head: dicionario com o tamanho de palavras em causa
+ * 
+ * return: void
+ * side efects: dá print á resposta
+ **************************************************/
+void printResposta(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+
+    /* caso nao exista caminho */
+    if (resultado.custo == -1){
+        fprintf(output, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+    } else {
+        printR(resultado, origem, destino, output, problem, dict_head);
+        fprintf(output, "%s", dict_head->table[destino]);
+    }
+    
+    return;
+}
+/**************************************************************
+ * printR()
+ * 
+ * descricao: funcao recursiva que escreve todos os resulados de 
+ *            um caminho mais curto menos o ultimo
+ ********************************************************************/
+void printR(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+
+    if (resultado.ant[destino] == origem){
+        fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);
+    } else {
+        printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
+        fprintf(output, "%s", dict_head->table[resultado.ant[destino]]);
+    }
+
+    return;
+}

@@ -10,18 +10,24 @@
  *          int origem:     index do vertice de origem do problema
  *          int destino:    index do vertice de destino do problema
  *          graph *grafo:   grafo com:(numOfVertices, numOfEdges, wordSize, numOfMutations, **adjList)
+ *          struct caminho_mais_curto resultado: contem o custo do caminho e um vetor de antecessores
  *
- * return: void
+ * return: uma estrotura com o custo e um vetor com os antecessore de cada vertice
+ *         se nao existir caminho o custo será -1
+ * side efects: encontra o caminho mais curto entre dois vertices(neste caso entre duas palavras) 
+ *              e o seu respetivo custo
  *
  *************************************************************************************************************************/
-void dijkstra(int origem, int destino, Graph *grafo)
+void dijkstra(int origem, int destino, Graph *grafo, struct caminho_mais_curto *resultado)
 {
-    int i, v,                          /* variáveis auxiliares */
-        ant[grafo->numOfVertices];     /* vetor dos antecessores */
+    int i, v;                          /* variáveis auxiliares */  
     short int z[grafo->numOfVertices]; /* vértices para os quais se conhece o caminho mínimo */
     float dist[grafo->numOfVertices];  /* vetor com os custos dos caminhos */
     double min;                        /* variável auxiliar */
     node *no_aux;                      /*no auxiliar*/
+
+    resultado->ant = (int *)malloc(sizeof(int)*grafo->numOfVertices); /* vetor dos antecessores */
+    
 
     /* Inicializacoes */
     for (int i = 0; i < grafo->numOfVertices; i++)
@@ -31,7 +37,7 @@ void dijkstra(int origem, int destino, Graph *grafo)
         /* desconhecido o caminho minimo (z[vertice]=0) */
         z[i] = 0;
         /* inicialmente ningem tem antecessor */
-        ant[i] = -1;
+        resultado->ant[i] = -1;
     }
 
     /* carrega os custos dos vertices que estao ligados a origem*/
@@ -41,7 +47,7 @@ void dijkstra(int origem, int destino, Graph *grafo)
         dist[no_aux->vertex] = no_aux->cost;
 
         /* todos os que estiverem nesta lista de adjacencias tem a origem como antecessor */
-        ant[no_aux->vertex] = origem;
+        resultado->ant[no_aux->vertex] = origem;
 
         no_aux = no_aux->next;
     }
@@ -83,7 +89,7 @@ void dijkstra(int origem, int destino, Graph *grafo)
                     if (dist[v] + no_aux->cost < dist[no_aux->vertex])
                     {
                         dist[no_aux->vertex] = dist[v] + no_aux->cost;
-                        ant[no_aux->vertex] = v;
+                        resultado->ant[no_aux->vertex] = v;
                     }
                 }
 
@@ -91,4 +97,14 @@ void dijkstra(int origem, int destino, Graph *grafo)
             }
         }
     } while (v != destino && min != HUGE_VAL);
+
+    // se não existir caminho min é inifinito
+    // para facilitar retornamos apenas -1
+    if (min == HUGE_VAL){
+        min = -1;
+    }
+    resultado->custo = min;
+
+    /*retorna uma estrotura que foi passada por argumentos*/
+    return;
 }
