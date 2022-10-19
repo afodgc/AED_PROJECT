@@ -15,9 +15,9 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    //TO-DO: aloc grafo
+    //----TO-DO----: aloc/init grafo
 
-    //TO-DO:   solve problem
+    //----TO-DO----:   solve problem
 
 
 
