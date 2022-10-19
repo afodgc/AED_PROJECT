@@ -26,6 +26,11 @@ typedef struct mygraph
 
 } Graph;
 
+struct caminho_mais_curto {
+    int *ant;
+    int custo;
+};
+
 Graph *init_graph(int, int, int);
 void insert_edge(Graph *, edge *);
 void freeGraph(Graph *);
@@ -35,6 +40,6 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations);
 
 node *newNode(int, node *);
 
-void dijkstra(int origem, int destino, Graph *grafo);
+void dijkstra(int origem, int destino, Graph *grafo, struct caminho_mais_curto *resultado);
 
 #endif
