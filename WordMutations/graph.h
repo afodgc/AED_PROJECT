@@ -7,7 +7,8 @@ typedef struct myedge
 {
     int start;
     int dest;
-} edge;
+    short int cost;
+} Edge;
 
 typedef struct _node
 {
@@ -26,19 +27,20 @@ typedef struct mygraph
 
 } Graph;
 
-struct caminho_mais_curto {
+struct caminho_mais_curto
+{
     int *ant;
     int custo;
 };
 
 Graph *init_graph(int, int, int);
-void insert_edge(Graph *, edge *);
+void insert_edge(Graph *, Edge);
 void freeGraph(Graph *);
 
 Graph *aloc_adjList(Graph *, dict *dict_head);
-int compareTwoWords(char *word1, char *word2, int numOfMutations);
+int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost);
 
-node *newNode(int, node *);
+node *newNode(int, node *, short int);
 
 void dijkstra(int origem, int destino, Graph *grafo, struct caminho_mais_curto *resultado);
 
