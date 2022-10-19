@@ -100,7 +100,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
         return 0;
     }
 
-    // o numero de mutações indicadas não é válido
+    // o numero de mutações indicadas é inválido
     if (problem.numOfmutations < 1 && problem.numOfmutations > 3)
     {
         fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
