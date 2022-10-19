@@ -1,6 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+#include "dicionario.h"
+
 typedef struct myedge
 {
     int start;
@@ -22,12 +24,17 @@ typedef struct mygraph
     int numOfMutations;
     node **adjList;
 
-} graph;
+} Graph;
 
-graph *init_graph(int);
-void insert_edge(graph *, edge *);
-void freeGraph(graph *);
+Graph *init_graph(int, int, int);
+void insert_edge(Graph *, edge *);
+void freeGraph(Graph *);
+
+Graph *aloc_adjList(Graph *, dict *dict_head);
+int compareTwoWords(char *word1, char *word2, int numOfMutations);
 
 node *newNode(int, node *);
+
+void dijkstra(int origem, int destino, Graph *grafo);
 
 #endif
