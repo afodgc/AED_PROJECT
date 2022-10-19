@@ -21,6 +21,6 @@ int checkIfFileExists(char *file_name);
 void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals);
 
 char *createOutput(char *name);
-void checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout);
+int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices);
 
 #endif
