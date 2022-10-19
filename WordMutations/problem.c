@@ -37,6 +37,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 {
     problem problem;
     FILE *fpIn = NULL, *fpOut = NULL;
+    graph *grafo[MAX_LEN_WORDS];
 
     char *file_out = createOutput(name_of_output_file);
 
@@ -50,6 +51,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
     fclose(fpIn);
     fclose(fpOut);
+    free(file_out);
 }
 
 // criar nome do ficheiro de saida
@@ -60,7 +62,6 @@ char *createOutput(char *name)
     {
         exit(0);
     }
-
     strcpy(file_out, name);
     strcat(file_out, ".paths");
 

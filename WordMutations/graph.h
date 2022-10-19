@@ -10,6 +10,7 @@ typedef struct myedge
 typedef struct _node
 {
     int vertex;
+    short int cost;
     struct _node *next;
 } node;
 
@@ -20,6 +21,7 @@ typedef struct mygraph
     int wordSize;
     int numOfMutations;
     node **adjList;
+
 } graph;
 
 graph *init_graph(int);
