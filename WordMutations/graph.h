@@ -43,5 +43,6 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, 
 node *newNode(int, node *, short int);
 
 void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int numOfmutations);
+void printGraph(Graph *g);
 
 #endif

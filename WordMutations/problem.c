@@ -38,9 +38,13 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     problem problem;
     Graph **graph;
     FILE *fpIn = NULL, *fpOut = NULL;
-    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0;
+    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0;
     char *file_out = createOutput(name_of_output_file);
-    int i = 0;
+
+    Caminho result;
+    result.custo = 0;
+    result.ant = NULL;
+
     // alocar ponteiro para os ponteiros para grafos
     graph = (Graph **)malloc(sizeof(Graph *));
 
@@ -56,8 +60,13 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         for (i = 0; i < numOfGraphs; i++)
         {
             // estamos a ver se ja existe um grafo alocado para aquele tamanho de palavras
-            graph[i]->wordSize = strlen(problem.starting_word);
-            
+            if (graph[i]->wordSize == strlen(problem.starting_word))
+            {
+                if (problem.numOfmutations > graph[i]->numOfMutations)
+                {
+                    // temos de ver se é possivel chegar à soluçao sem adicionar ao grafo este tipo de mutaçoes, ver se o custo é memor ou igual nmutations²
+                }
+            }
 
             // se já existir temos de fazer umas coisas...
         }
@@ -67,6 +76,19 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         graph[i] = init_graph(numOfVertices, problem.numOfmutations, strlen(problem.starting_word));
         graph[i] = aloc_adjList(graph[i], dict_head);
 
+        //printGraph(graph[i]);
+
+
+        /*
+        if (result.ant != NULL)
+        {
+            free(result.ant);
+        }*/
+
+        dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
+
+        printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
+        //  dijsktra
         numOfGraphs++;
     }
 
@@ -74,11 +96,11 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     fclose(fpOut);
     free(file_out);
 
+    free(result.ant);
+
     for (int i = 0; i < numOfGraphs; i++)
     {
         freeGraph(graph[i]);
-        free(graph[i]->adjList);
-        free(graph[i]);
     }
     free(graph);
 }
@@ -174,16 +196,26 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
  * return: void
  * side efects: dá print á resposta
  **************************************************/
-void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head)
+{
+    dict *dict_aux = dict_head;
+
+    while (dict_aux->word_size != strlen(problem.arrival_word))
+    {
+        dict_aux = dict_aux->next;
+    }
 
     /* caso nao exista caminho */
-    if (resultado.custo == -1){
+    if (resultado.custo == -1)
+    {
         fprintf(output, "%s -1\n%s", problem.starting_word, problem.arrival_word);
-    } else {
-        printR(resultado, origem, destino, output, problem, dict_head);
-        fprintf(output, "%s", dict_head->table[destino]);
     }
-    
+    else
+    {
+        printR(resultado, origem, destino, output, problem, dict_aux);
+        fprintf(output, "%s\n", dict_aux->table[destino]);
+    }
+
     return;
 }
 /**************************************************************
@@ -192,13 +224,17 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
  * descricao: funcao recursiva que escreve todos os resulados de
  *            um caminho mais curto menos o ultimo
  ********************************************************************/
-void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head)
+{
 
-    if (resultado.ant[destino] == origem){
-        fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);
-    } else {
+    if (resultado.ant[destino] == origem)
+    {
+        fprintf(output, "%s %i\n", dict_head->table[resultado.ant[destino]], resultado.custo);
+    }
+    else
+    {
         printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
-        fprintf(output, "%s", dict_head->table[resultado.ant[destino]]);
+        fprintf(output, "%s\n", dict_head->table[resultado.ant[destino]]);
     }
 
     return;

@@ -28,6 +28,7 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
     {
         G->adjList[v] = NULL;
     }
+
     return G;
 }
 
@@ -58,9 +59,9 @@ Graph *aloc_adjList(Graph *g, dict *dict_head)
         if (aux_dict->word_size == g->wordSize)
         {
             // vamos percorrer palavra a palavra e comparar com todas as outras e descobrir as que estao conectadas
-            for (int i = 0; i < aux_dict->table_size - 1; i++)
+            for (int i = 0; i < aux_dict->table_size ; i++)
             {
-                for (int j = i + 1; j < aux_dict->table_size - 1; j++)
+                for (int j = i + 1; j < aux_dict->table_size ; j++)
                 {
                     // se as palavras difererem menos ou igual ao num de mutações entao temos de conecta-las
                     if (compareTwoWords(aux_dict->table[i], aux_dict->table[j], g->numOfMutations, aux_dict->word_size, &cost) == 1)
@@ -102,10 +103,10 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, 
     return 0;
 }
 
-
 void freeGraph(Graph *g)
 {
     node *node_aux = NULL, *tmp = NULL;
+
     for (int i = 0; i < g->numOfVertices; i++)
     {
         node_aux = g->adjList[i];
@@ -116,5 +117,21 @@ void freeGraph(Graph *g)
             node_aux = tmp->next;
             free(tmp);
         }
+    }
+    free(g->adjList);
+    free(g);
+}
+
+void printGraph(Graph *g){
+    node *tmp;
+
+    for (int i = 0; i < g->numOfVertices; i++){
+        tmp = g->adjList[i];
+        printf("[%d]",i);
+        while(tmp != NULL){
+            printf("->%d", tmp->vertex);
+            tmp = tmp->next;
+        }
+        printf("\n");
     }
 }

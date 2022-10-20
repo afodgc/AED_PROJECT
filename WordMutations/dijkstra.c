@@ -51,9 +51,11 @@ void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int num
     while (no_aux != NULL)
     {
         // verifiacar se a aresta tem o custo permitido
-        if (no_aux->cost >= custo_max)
+        if (no_aux->cost > custo_max){
+            no_aux = no_aux->next;
             continue;
-
+        }
+            
         dist[no_aux->vertex] = no_aux->cost;
 
         /* todos os que estiverem nesta lista de adjacencias tem a origem como antecessor */
@@ -73,16 +75,17 @@ void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int num
         /* ja sabemos as distancias ate aos vizinhos de z */
         /* Encontrando o vertice que deve entrar em z */
         min = HUGE_VAL;
-        for (i = 0; i < grafo->numOfVertices; i++)
+        for (i = 0; i < grafo->numOfVertices; i++){
             /* se o vertice ainda nao esta blockeado entra no if*/
             if (!z[i])
             {
-                if (dist[i] >= 0 && dist[i] < min)
+                if (dist[i] > 0 && dist[i] < min)
                 {
                     min = dist[i];
                     v = i;
                 }
             }
+        }
 
         /* Calculando as distâncias dos novos vizinhos de z */
         if (min != HUGE_VAL && v != destino)
@@ -92,12 +95,12 @@ void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int num
             while (no_aux != NULL)
             {
                 /* se o vertice ainda nao esta blockeado entra no if*/
-                if (!z[i])
+                if (!z[no_aux->vertex])
                 {
                     /*compara a distancia do ate ao nó blockeado mais
                     a distancia do nó ate ao outro no de adjacencia com a distancia guardada*/
                     /* verifiacar se a aresta tem o custo permitido */
-                    if (dist[v] + no_aux->cost < dist[no_aux->vertex] && no_aux->cost < custo_max)
+                    if (dist[v] + no_aux->cost < dist[no_aux->vertex] && no_aux->cost <= custo_max)
                     {
                         dist[no_aux->vertex] = dist[v] + no_aux->cost;
                         resultado->ant[no_aux->vertex] = v;
