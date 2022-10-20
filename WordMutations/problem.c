@@ -57,6 +57,8 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         {
             // estamos a ver se ja existe um grafo alocado para aquele tamanho de palavras
             graph[i]->wordSize = strlen(problem.starting_word);
+            
+
             // se já existir temos de fazer umas coisas...
         }
         // if(graph[i]->result != 0) break; isto serve para passarmos para o proximo problema
@@ -109,7 +111,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     }
 
     // o numero de mutações indicadas é inválido
-    if (problem.numOfmutations < 1 && problem.numOfmutations > 3)
+    if (problem.numOfmutations < 1)
     {
         fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
         return 0;
