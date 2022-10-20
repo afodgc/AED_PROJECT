@@ -174,34 +174,32 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
  * return: void
  * side efects: dá print á resposta
  **************************************************/
+void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
-// void printResposta(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
+    /* caso nao exista caminho */
+    if (resultado.custo == -1){
+        fprintf(output, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+    } else {
+        printR(resultado, origem, destino, output, problem, dict_head);
+        fprintf(output, "%s", dict_head->table[destino]);
+    }
+    
+    return;
+}
+/**************************************************************
+ * printR()
+ *
+ * descricao: funcao recursiva que escreve todos os resulados de
+ *            um caminho mais curto menos o ultimo
+ ********************************************************************/
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
 
-//     /* caso nao exista caminho */
-//     if (resultado.custo == -1){
-//         fprintf(output, "%s -1\n%s", problem.starting_word, problem.arrival_word);
-//     } else {
-//         printR(resultado, origem, destino, output, problem, dict_head);
-//         fprintf(output, "%s", dict_head->table[destino]);
-//     }
+    if (resultado.ant[destino] == origem){
+        fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);
+    } else {
+        printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
+        fprintf(output, "%s", dict_head->table[resultado.ant[destino]]);
+    }
 
-//     return;
-// }
-
-// /**************************************************************
-//  * printR()
-//  *
-//  * descricao: funcao recursiva que escreve todos os resulados de
-//  *            um caminho mais curto menos o ultimo
-//  ********************************************************************/
-// void printR(struct caminho_mais_curto resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head){
-
-//     if (resultado.ant[destino] == origem){
-//         fprintf(output, "%s %i", dict_head->table[resultado.ant[destino]], resultado.custo);
-//     } else {
-//         printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
-//         fprintf(output, "%s", dict_head->table[resultado.ant[destino]]);
-//     }
-
-//     return;
-// }
+    return;
+}
