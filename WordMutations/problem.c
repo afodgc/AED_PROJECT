@@ -38,7 +38,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     problem problem;
     Graph **graph = NULL;
     FILE *fpIn = NULL, *fpOut = NULL;
-    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0;
+    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0, count = 0;
     char *file_out = createOutput(name_of_output_file);
 
     Caminho result;
@@ -55,6 +55,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     {
         numOfMutations[i] = 0;
     }
+    
 
     // vamos percorrer o ficheiro de problemas par sabermos de antemao os grafos e o numero de mutaçoes que temos de alocar
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
@@ -64,10 +65,23 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
         if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
         {
-            if (problem.numOfmutations > strlen(problem.starting_word)/2)
-                problem.numOfmutations = strlen(problem.starting_word)/2;
-
-            numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
+            //vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
+            count = 0;
+            for(i = 0; i < strlen(problem.starting_word); i++){
+                if(problem.arrival_word[i] != problem.starting_word [i]){
+                    count++;
+                }
+            }
+            
+            //se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
+            //seja apenas igual ao numero de caracteres diferentes
+            if(problem.numOfmutations >= count)
+                if(count > numOfMutations[strlen(problem.starting_word)] )
+                    problem.numOfmutations = count;
+            
+            //caso o numero de mutaçoes seja inferior ou igual ao numero de caracteres diferentes entao podemos atualizar o numero de mutaçoes
+            if(problem.numOfmutations <= count)
+                numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
 
         }
     }
@@ -171,7 +185,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     if (startWordSize != destWordSize)
     {
         if (printResult)
-            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+            fprintf(fpout, "%s -1\n%s\n\n", problem.starting_word, problem.arrival_word);
 
         return 0;
     }
@@ -180,7 +194,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     if (problem.numOfmutations < 1)
     {
         if (printResult)
-            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+            fprintf(fpout, "%s -1\n%s\n\n", problem.starting_word, problem.arrival_word);
         return 0;
     }
 
@@ -199,7 +213,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             if (*startWordIndex == -1 || *destWordIndex == -1)
             {
                 if (printResult)
-                    fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+                    fprintf(fpout, "%s -1\n%s\n\n", problem.starting_word, problem.arrival_word);
                 return 0;
             }
 
@@ -208,7 +222,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             {
                 // as palavras sao iguais e existem no dict, logo o custo é 0
                 if (printResult)
-                    fprintf(fpout, "%s 0\n%s", problem.starting_word, problem.arrival_word);
+                    fprintf(fpout, "%s 0\n%s\n\n", problem.starting_word, problem.arrival_word);
                 return 0;
             }
 
@@ -221,7 +235,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     if (aux_dict == NULL)
     {
         if (printResult)
-            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+            fprintf(fpout, "%s -1\n%s\n\n", problem.starting_word, problem.arrival_word);
         return 0;
     }
 
