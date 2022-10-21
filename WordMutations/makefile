@@ -6,6 +6,3 @@ ARGS =
 all:
 	$(CC) $(FLAGS) -o $(TARGET) main.c arguments.c problem.c dicionario.c graph.c dijkstra.c -lm
 
-clean:
-	rm -rf *.o
-
