@@ -38,9 +38,9 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     problem problem;
     Graph **graph = NULL;
     FILE *fpIn = NULL, *fpOut = NULL;
-    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0, count = 0;
+    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0, diferentChar = 0;
     char *file_out = createOutput(name_of_output_file);
-
+    dict *dict_aux = dict_head;
     Caminho result;
     result.custo = 0;
     result.ant = NULL;
@@ -66,21 +66,22 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
         {
             //vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
-            count = 0;
+            diferentChar = 0;
             for(i = 0; i < strlen(problem.starting_word); i++){
+
                 if(problem.arrival_word[i] != problem.starting_word [i]){
-                    count++;
+                    diferentChar++;
                 }
             }
-            
+           
             //se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
             //seja apenas igual ao numero de caracteres diferentes
-            if(problem.numOfmutations >= count)
-                if(count > numOfMutations[strlen(problem.starting_word)] )
-                    problem.numOfmutations = count;
-            
+            if(problem.numOfmutations >= diferentChar)
+                if(diferentChar > numOfMutations[strlen(problem.starting_word)] )
+                    problem.numOfmutations = diferentChar;
+
             //caso o numero de mutaçoes seja inferior ou igual ao numero de caracteres diferentes entao podemos atualizar o numero de mutaçoes
-            if(problem.numOfmutations <= count)
+            if(problem.numOfmutations <= diferentChar)
                 numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
 
         }
@@ -88,6 +89,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
     //para sabermos o numero de grafos que temos de alocar
     for(i = 0; i < MAX_LEN_WORDS; i++){
+
         if(numOfMutations[i] != 0)
             numOfGraphs++;
     }
@@ -99,7 +101,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
 
     numOfGraphs = 0;
-    dict *dict_aux = dict_head;
+    
     // agora vamos percorrer o vetor que guardou quais os grafos e o numero de mutaçoes que temos de alocar
     for (i = 0; i < MAX_LEN_WORDS; i++)
     {
