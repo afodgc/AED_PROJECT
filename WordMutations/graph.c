@@ -7,6 +7,8 @@
 node *newNode(int vertex, node *next, short int cost)
 {
     node *x = (node *)malloc(sizeof(node));
+    if( x == NULL)
+        exit(0);
     // x é do tipo node
     x->vertex = vertex;
     x->cost = cost;
@@ -23,6 +25,8 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
     G->numOfMutations = numOfMutations;
     G->wordSize = wordSize;
     G->adjList = (node **)malloc(numOfVertices * sizeof(node *));
+    if(G->adjList == NULL)
+        exit(0);
 
     for (int v = 0; v < numOfVertices; v++)
     {

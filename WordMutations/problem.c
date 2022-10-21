@@ -36,7 +36,7 @@ FILE *openFile(char *file_pals, char *mode)
 void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 {
     problem problem;
-    Graph **graph;
+    Graph **graph = NULL;
     FILE *fpIn = NULL, *fpOut = NULL;
     int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0;
     char *file_out = createOutput(name_of_output_file);
@@ -45,16 +45,76 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     result.custo = 0;
     result.ant = NULL;
 
-    // alocar ponteiro para os ponteiros para grafos
-    graph = (Graph **)malloc(sizeof(Graph *));
 
     fpIn = openFile(file_pals, "r");
     fpOut = openFile(file_out, "w");
 
+    int numOfMutations[MAX_LEN_WORDS];
+
+    for (i = 0; i < MAX_LEN_WORDS; i++)
+    {
+        numOfMutations[i] = 0;
+    }
+
+    // vamos percorrer o ficheiro de problemas par sabermos de antemao os grafos e o numero de mutaçoes que temos de alocar
+    while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
+    {
+        if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 0) == 0)
+            continue;
+
+        if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
+        {
+            if (problem.numOfmutations > strlen(problem.starting_word)/2)
+                problem.numOfmutations = strlen(problem.starting_word)/2;
+
+            numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
+
+        }
+    }
+
+    //para sabermos o numero de grafos que temos de alocar
+    for(i = 0; i < MAX_LEN_WORDS; i++){
+        if(numOfMutations[i] != 0)
+            numOfGraphs++;
+    }
+
+    // alocar ponteiro para os ponteiros para grafos
+    graph = (Graph **) malloc(numOfGraphs * sizeof(Graph *));
+    if (graph == NULL)
+        exit(0);
+
+
+    numOfGraphs = 0;
+    dict *dict_aux = dict_head;
+    // agora vamos percorrer o vetor que guardou quais os grafos e o numero de mutaçoes que temos de alocar
+    for (i = 0; i < MAX_LEN_WORDS; i++)
+    {
+
+        if (numOfMutations[i] != 0)
+        {
+
+            while (dict_aux != NULL)
+            {
+                if (dict_aux->word_size == i)
+                {
+                    numOfVertices = dict_aux->table_size;
+                    break;
+                }
+
+                dict_aux = dict_aux->next;
+            }
+
+            graph[numOfGraphs] = init_graph(numOfVertices, numOfMutations[i], i);
+            graph[numOfGraphs] = aloc_adjList(graph[numOfGraphs], dict_head);
+            numOfGraphs++;
+        }
+    }
+
+    fseek(fpIn, 0, SEEK_SET);
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
         // se o problema estiver mal definido passamos ao próximo problema
-        if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices) == 0)
+        if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
 
         for (i = 0; i < numOfGraphs; i++)
@@ -62,34 +122,16 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
             // estamos a ver se ja existe um grafo alocado para aquele tamanho de palavras
             if (graph[i]->wordSize == strlen(problem.starting_word))
             {
-                if (problem.numOfmutations > graph[i]->numOfMutations)
-                {
-                    // temos de ver se é possivel chegar à soluçao sem adicionar ao grafo este tipo de mutaçoes, ver se o custo é memor ou igual nmutations²
-                }
+
+                if (result.ant != NULL)
+                    free(result.ant);
+
+                dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
+
+                printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
+                fprintf(fpOut, "\n");
             }
-
-            // se já existir temos de fazer umas coisas...
         }
-        // if(graph[i]->result != 0) break; isto serve para passarmos para o proximo problema
-
-        // se nao existir temos de alocar um novo grafo para este tamanho de palavras
-        graph[i] = init_graph(numOfVertices, problem.numOfmutations, strlen(problem.starting_word));
-        graph[i] = aloc_adjList(graph[i], dict_head);
-
-        //printGraph(graph[i]);
-
-
-        /*
-        if (result.ant != NULL)
-        {
-            free(result.ant);
-        }*/
-
-        dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
-
-        printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
-        //  dijsktra
-        numOfGraphs++;
     }
 
     fclose(fpIn);
@@ -120,7 +162,7 @@ char *createOutput(char *name)
 }
 
 // se o problema estiver bem definido retornamos 1, se nao 0, antes de retornamos 0 temos de fprintf antes
-int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices)
+int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices, int printResult)
 {
     dict *aux_dict = dict_head;
     int startWordSize = strlen(problem.starting_word), destWordSize = strlen(problem.arrival_word);
@@ -128,14 +170,17 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     // se as palavras tiverem tamanhos diferentes
     if (startWordSize != destWordSize)
     {
-        fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+        if (printResult)
+            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+
         return 0;
     }
 
     // o numero de mutações indicadas é inválido
     if (problem.numOfmutations < 1)
     {
-        fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+        if (printResult)
+            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
         return 0;
     }
 
@@ -153,7 +198,8 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             // pelo menos uma das palavras não está no dict, logo o problema está mal definido
             if (*startWordIndex == -1 || *destWordIndex == -1)
             {
-                fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+                if (printResult)
+                    fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
                 return 0;
             }
 
@@ -161,7 +207,8 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
             if ((*startWordIndex == *destWordIndex) && *startWordIndex != -1 && *destWordIndex != -1)
             {
                 // as palavras sao iguais e existem no dict, logo o custo é 0
-                fprintf(fpout, "%s 0\n%s", problem.starting_word, problem.arrival_word);
+                if (printResult)
+                    fprintf(fpout, "%s 0\n%s", problem.starting_word, problem.arrival_word);
                 return 0;
             }
 
@@ -173,7 +220,8 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
     // percorremos o dict todo e nao encontramos o tamanho para as palavras do problema
     if (aux_dict == NULL)
     {
-        fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+        if (printResult)
+            fprintf(fpout, "%s -1\n%s", problem.starting_word, problem.arrival_word);
         return 0;
     }
 
@@ -208,7 +256,7 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
     /* caso nao exista caminho */
     if (resultado.custo == -1)
     {
-        fprintf(output, "%s -1\n%s", problem.starting_word, problem.arrival_word);
+        fprintf(output, "%s -1\n%s\n", problem.starting_word, problem.arrival_word);
     }
     else
     {
