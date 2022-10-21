@@ -2,6 +2,20 @@
 #include "dicionario.h"
 #include "graph.h"
 
+/*========================================================================*/
+/* Nomes:  Afonso Daniel Guerreiro Coelho   numeros de aluno: 103450
+ *         Miguel Luís Valentim Andrade                       102530
+ *
+ * Data: 21/10/2022
+ * =======================================================================
+ *  Descrição: Este programa é a nossa implementação do projeto de AED 
+ *             chamado de "WordMutatios" que cacula o caminho de custo 
+ *             minino entre duas palavras. Para mais informações 
+ *             sobre o projeto veja o pdf.
+ * 
+ *  
+ */
+/*========================================================================*/
 int main(int argc, char **argv)
 {
     dict *dict_head = NULL;
@@ -16,13 +30,8 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    // TO-DO: aloc grafo
     solveProblem(dict_head, name_of_output_file, argv[2]);
-    // TO-DO:   solve problem
 
-    // TO-DO: aloc grafo
-
-    // TO-DO:   solve problem
 
     free(name_of_output_file);
     freeDict(dict_head);
