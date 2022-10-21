@@ -26,13 +26,6 @@ FILE *openFile(char *file_pals, char *mode)
     return fp;
 }
 
-/* -------TO-DO------- solve problem*/
-
-// while existir problemas para resolver
-// verificar se as palavras tem o mesmo tamanho
-// no inicio verificar se as palavras existem no dicionário
-// algoritmo de procura do caminho mais cuto
-
 void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 {
     problem problem;
@@ -45,7 +38,6 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     result.custo = 0;
     result.ant = NULL;
 
-
     fpIn = openFile(file_pals, "r");
     fpOut = openFile(file_out, "w");
 
@@ -55,61 +47,61 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     {
         numOfMutations[i] = 0;
     }
-    
 
     // vamos percorrer o ficheiro de problemas par sabermos de antemao os grafos e o numero de mutaçoes que temos de alocar
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
-        //se o problema estiver mal definido nem temos de fazer as próximas verificações 
+        // se o problema estiver mal definido nem temos de fazer as próximas verificações
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 0) == 0)
             continue;
 
-        //se o numero de mutaçoes indicada no problema for superior ao numero que temos guardado ate agora, temos de avaliar se é preciso atualizar
+        // se o numero de mutaçoes indicada no problema for superior ao numero que temos guardado ate agora, temos de avaliar se é preciso atualizar
         if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
         {
-            //vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
+            // vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
             diferentChar = 0;
-            for(i = 0; i < strlen(problem.starting_word); i++){
-                if(problem.arrival_word[i] != problem.starting_word [i]){
+            for (i = 0; i < strlen(problem.starting_word); i++)
+            {
+                if (problem.arrival_word[i] != problem.starting_word[i])
+                {
                     diferentChar++;
                 }
             }
-           
+
             /*se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
             seja apenas igual ao numero de caracteres diferentes*/
-            if(problem.numOfmutations >= diferentChar)
-                if(diferentChar > numOfMutations[strlen(problem.starting_word)] )
+            if (problem.numOfmutations >= diferentChar)
+                if (diferentChar > numOfMutations[strlen(problem.starting_word)])
                     problem.numOfmutations = diferentChar;
 
-            //caso o numero de mutaçoes seja inferior ou igual ao numero de caracteres diferentes entao podemos atualizar o numero de mutaçoes
-            if(problem.numOfmutations <= diferentChar)
+            // caso o numero de mutaçoes seja inferior ou igual ao numero de caracteres diferentes entao podemos atualizar o numero de mutaçoes
+            if (problem.numOfmutations <= diferentChar)
                 numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
-
         }
     }
 
-    //para sabermos o numero de grafos que temos de alocar
-    for(i = 0; i < MAX_LEN_WORDS; i++){
+    // para sabermos o numero de grafos que temos de alocar
+    for (i = 0; i < MAX_LEN_WORDS; i++)
+    {
 
-        if(numOfMutations[i] != 0)
+        if (numOfMutations[i] != 0)
             numOfGraphs++;
     }
 
     // alocar ponteiro para os ponteiros para grafos
-    graph = (Graph **) malloc(numOfGraphs * sizeof(Graph *));
+    graph = (Graph **)malloc(numOfGraphs * sizeof(Graph *));
     if (graph == NULL)
         exit(0);
 
-
     numOfGraphs = 0;
-    
+
     // agora vamos percorrer o vetor que guardou quais os grafos e o numero de mutaçoes que temos de alocar
     for (i = 0; i < MAX_LEN_WORDS; i++)
     {
 
         if (numOfMutations[i] != 0)
         {
-            //percorrer a lista de tabelas para encontrar o dicionario correspondente àquele tamanho de palavras
+            // percorrer a lista de tabelas para encontrar o dicionario correspondente àquele tamanho de palavras
             while (dict_aux != NULL)
             {
                 if (dict_aux->word_size == i)
@@ -121,14 +113,14 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 dict_aux = dict_aux->next;
             }
 
-            //alocar um novo grafo de acordo com o tamanho da palavra e o número de mutações 
+            // alocar um novo grafo de acordo com o tamanho da palavra e o número de mutações
             graph[numOfGraphs] = init_graph(numOfVertices, numOfMutations[i], i);
             graph[numOfGraphs] = aloc_adjList(graph[numOfGraphs], dict_head);
             numOfGraphs++;
         }
     }
 
-    //voltar ao inicio do ficheiro de problemas
+    // voltar ao inicio do ficheiro de problemas
     fseek(fpIn, 0, SEEK_SET);
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
@@ -136,20 +128,20 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
 
-        //percorrer o vetor de grafos
+        // percorrer o vetor de grafos
         for (i = 0; i < numOfGraphs; i++)
         {
             // encontrar o grafo correspondente ao tamanho das palavras do problema
             if (graph[i]->wordSize == strlen(problem.starting_word))
             {
-                //dar free no vetor ant do dijkstra do problema anterior
+                // dar free no vetor ant do dijkstra do problema anterior
                 if (result.ant != NULL)
                     free(result.ant);
 
-                //encontrar o caminho mais curto entre as duas palavras
+                // encontrar o caminho mais curto entre as duas palavras
                 dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
 
-                //dar print na resposta
+                // dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
                 fprintf(fpOut, "\n");
             }
