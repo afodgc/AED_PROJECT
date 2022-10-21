@@ -237,7 +237,7 @@ void freeDict(dict *head)
 /**************************************************
  * binaryScr()
  *
- * argumets:
+ * arguments:
  *          int low:       index do menor elemento
  *          int high:      index do maior elemento
  *          char *palavra: palavra a ser encontrada
