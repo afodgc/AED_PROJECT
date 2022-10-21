@@ -4,6 +4,19 @@
 
 #include "graph.h"
 
+
+/*******************************************************
+ *  *newNode()
+ * 
+ * arguments:
+ *              int vertex: vertice que vai ficar guardado naquele nó
+ *              node *next: nó ao qual temos de adicionar um novo nó
+ *              short int cost: custo associado àquele nó
+ *  
+ * return: retorna o novo nó inserido na lista do nó ao qual o queriamos adionar
+ * 
+ * 
+ * *****************************************************/
 node *newNode(int vertex, node *next, short int cost)
 {
     node *x = (node *)malloc(sizeof(node));
@@ -35,7 +48,16 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
 
     return G;
 }
-
+/***********************************************
+ * insert_Edge()
+ * 
+ * arguments:
+ *         Graph *g: grafo ao qual queremos adionar uma nova aresta
+ *         edge e: informações a cerca da aresta que queremos inserir no grafo
+ * 
+ * return: void
+ * 
+ * ********************************************/
 void insert_edge(Graph *g, Edge e)
 {
 
@@ -47,9 +69,18 @@ void insert_edge(Graph *g, Edge e)
     g->numOfEdges++;
 }
 
-/*
-Nesta função vamos alocar a lista de adjacencias
-*/
+/**********************************************
+ * aloc_adjList()
+ * 
+ * arguments:
+ *          Graph *g: recebe o grafo em que queremos alocar a lista de adjacências
+ *          dict *dict_head: cabeça de lista da lista de tabelas correspondente ao dicionário
+ * 
+ * Nesta função vamos percorrer a tabela do dicionario do tamanho correspondente, e vamos comparar palavra a palavra e ver
+ * quantos caracteres diferem entre si, se esse valor for inferior ou igual ao numero de mutações permitidas, então inserimos
+ * uma aresta entre os indexes dessas duas palavras.
+ * 
+ *********************************************/
 Graph *aloc_adjList(Graph *g, dict *dict_head)
 {
     dict *aux_dict = dict_head;
@@ -84,6 +115,20 @@ Graph *aloc_adjList(Graph *g, dict *dict_head)
 
     return g;
 }
+
+/****************************************
+ * compareTwoWords()
+ * 
+ * arguments:
+ * char *word1: palavra
+ * char *word2: palavra
+ * int numOfMutations: número de mutações permitidas
+ * int wordSize: tamanho das palavras
+ * int *cost: custo associado sem a mutação for permitida
+ * 
+ * return: 0 se as palavras não tiverem conectas e 1 se estiverem
+ * 
+ ****************************************/
 
 int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost)
 {
