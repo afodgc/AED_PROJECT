@@ -30,11 +30,7 @@ void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int num
 
     resultado->ant = (int *)malloc(sizeof(int)*grafo->numOfVertices); /* vetor dos antecessores */
 
-    /* TO-DO free antes de entrar na proxima vez ---------------------------------*/
-    /* TO-DO alocar resultado antes de entrar ------------------------------------*/
-    /* TO-DO dar free do resultado quando já não for preciso----------------------*/
     
-
     /* Inicializacoes */
     for (int i = 0; i < grafo->numOfVertices; i++)
     {
@@ -119,6 +115,6 @@ void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int num
     }
     resultado->custo = min;
 
-    /*retorna uma estrotura que foi passada por argumentos*/
+    /*retorna uma estrutura que foi passada por argumentos*/
     return;
 }

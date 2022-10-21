@@ -126,16 +126,3 @@ void freeGraph(Graph *g)
     free(g);
 }
 
-void printGraph(Graph *g){
-    node *tmp;
-
-    for (int i = 0; i < g->numOfVertices; i++){
-        tmp = g->adjList[i];
-        printf("[%d]",i);
-        while(tmp != NULL){
-            printf("->%d", tmp->vertex);
-            tmp = tmp->next;
-        }
-        printf("\n");
-    }
-}

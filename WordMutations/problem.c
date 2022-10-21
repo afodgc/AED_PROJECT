@@ -60,22 +60,23 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     // vamos percorrer o ficheiro de problemas par sabermos de antemao os grafos e o numero de mutaçoes que temos de alocar
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
+        //se o problema estiver mal definido nem temos de fazer as próximas verificações 
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 0) == 0)
             continue;
 
+        //se o numero de mutaçoes indicada no problema for superior ao numero que temos guardado ate agora, temos de avaliar se é preciso atualizar
         if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
         {
             //vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
             diferentChar = 0;
             for(i = 0; i < strlen(problem.starting_word); i++){
-
                 if(problem.arrival_word[i] != problem.starting_word [i]){
                     diferentChar++;
                 }
             }
            
-            //se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
-            //seja apenas igual ao numero de caracteres diferentes
+            /*se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
+            seja apenas igual ao numero de caracteres diferentes*/
             if(problem.numOfmutations >= diferentChar)
                 if(diferentChar > numOfMutations[strlen(problem.starting_word)] )
                     problem.numOfmutations = diferentChar;
@@ -108,7 +109,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
         if (numOfMutations[i] != 0)
         {
-
+            //percorrer a lista de tabelas para encontrar o dicionario correspondente àquele tamanho de palavras
             while (dict_aux != NULL)
             {
                 if (dict_aux->word_size == i)
@@ -120,12 +121,14 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 dict_aux = dict_aux->next;
             }
 
+            //alocar um novo grafo de acordo com o tamanho da palavra e o número de mutações 
             graph[numOfGraphs] = init_graph(numOfVertices, numOfMutations[i], i);
             graph[numOfGraphs] = aloc_adjList(graph[numOfGraphs], dict_head);
             numOfGraphs++;
         }
     }
 
+    //voltar ao inicio do ficheiro de problemas
     fseek(fpIn, 0, SEEK_SET);
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
@@ -133,17 +136,20 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
 
+        //percorrer o vetor de grafos
         for (i = 0; i < numOfGraphs; i++)
         {
-            // estamos a ver se ja existe um grafo alocado para aquele tamanho de palavras
+            // encontrar o grafo correspondente ao tamanho das palavras do problema
             if (graph[i]->wordSize == strlen(problem.starting_word))
             {
-
+                //dar free no vetor ant do dijkstra do problema anterior
                 if (result.ant != NULL)
                     free(result.ant);
 
+                //encontrar o caminho mais curto entre as duas palavras
                 dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
 
+                //dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
                 fprintf(fpOut, "\n");
             }
@@ -177,7 +183,7 @@ char *createOutput(char *name)
     return file_out;
 }
 
-// se o problema estiver bem definido retornamos 1, se nao 0, antes de retornamos 0 temos de fprintf antes
+// se o problema estiver bem definido retornamos 1, se nao 0, antes de retornamos 0 temos de fprintf antes, caso o printResult = 1
 int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices, int printResult)
 {
     dict *aux_dict = dict_head;
@@ -282,6 +288,7 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
 
     return;
 }
+
 /**************************************************************
  * printR()
  *

@@ -16,14 +16,9 @@ int main(int argc, char **argv)
 
     dict_head = dict_init(argv[1]);
 
-    // TO-DO: aloc grafo
+    
     solveProblem(dict_head, name_of_output_file, argv[2]);
-    // TO-DO:   solve problem
-
-    // TO-DO: aloc grafo
-
-    // TO-DO:   solve problem
-
+    
     free(name_of_output_file);
     freeDict(dict_head);
     return EXIT_SUCCESS;
