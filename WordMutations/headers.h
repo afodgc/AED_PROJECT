@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_STR 100
-#include "dicionario.h" //pode-se fazer isto???
+#include "dicionario.h"
 #include "graph.h"
 
 typedef struct
