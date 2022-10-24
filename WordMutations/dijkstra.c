@@ -5,11 +5,18 @@
 
 #define P (wt[v] + t->cost)
 
+/************************************************************************************
+ * 
+ * G : graph
+ * st: antecessores
+ * wt: custos para cada vertice
+ * numOfMutatios: (limitação do algoritmo)numero de mutações premitidas no proble 
+************************************************************************************/
 void GRAPHpfs(Graph *G, int s, int *st, float *wt, int numOfMutations)
 {
-    int PQsize;
+    int PQsize; //queu size
     int *pq, *qp;
-    int custo_max = numOfMutations * numOfMutations;
+    int custo_max = numOfMutations * numOfMutations; //(limitação do algoritmo) deistancia maxima á origem
 
     pq = (int *)calloc(G->numOfVertices + 1, sizeof(int));
     qp = (int *)calloc(G->numOfVertices + 1, sizeof(int));
