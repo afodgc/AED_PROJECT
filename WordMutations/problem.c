@@ -147,7 +147,8 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 result.ant = (int *)malloc(sizeof(int) * graph[i]->numOfVertices);
                 result.custos = (float *)malloc(sizeof(float) * graph[i]->numOfVertices);
 
-                GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
+                //GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
+                dijkstra(graph[i], startWordIndex, destWordIndex, result.ant, result.custos, problem.numOfmutations);
                 // dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
                 fprintf(fpOut, "\n");
