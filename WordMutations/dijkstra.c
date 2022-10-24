@@ -63,21 +63,8 @@ void PQinsert(int k, int *pq, int *qp, int *PQsize, float *wt)
 {
     qp[k] = ++(*PQsize);
     pq[*PQsize] = k;
-
-        /* ja sabemos as distancias ate aos vizinhos de z */
-        /* Encontrando o vertice que deve entrar em z */
-        min = HUGE_VAL;
-        for (i = 0; i < grafo->numOfVertices; i++){
-            /* se o vertice ainda nao esta blockeado entra no if*/
-            if (!z[i])
-            {
-                if (dist[i] > 0 && dist[i] < min)
-                {
-                    min = dist[i];
-                    v = i;
-                }
-            }
-        }
+    fixUp(pq, k, qp, wt);
+}
 
 void fixDown(int *pq, int k, int N, int *qp, float *wt)
 {
