@@ -1,6 +1,7 @@
 #include "headers.h"
 #include "dicionario.h"
 #include "graph.h"
+#include <math.h>
 
 /********************************************************************
  * openFile()
@@ -35,7 +36,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     char *file_out = createOutput(name_of_output_file);
     dict *dict_aux = dict_head;
     Caminho result;
-    result.custo = 0;
+    result.custos = NULL;
     result.ant = NULL;
 
     fpIn = openFile(file_pals, "r");
@@ -122,6 +123,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
 
     // voltar ao inicio do ficheiro de problemas
     fseek(fpIn, 0, SEEK_SET);
+
     while ((fscanf(fpIn, "%s %s %d", problem.starting_word, problem.arrival_word, &problem.numOfmutations)) == 3)
     {
         // se o problema estiver mal definido passamos ao próximo problema
@@ -137,10 +139,15 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 // dar free no vetor ant do dijkstra do problema anterior
                 if (result.ant != NULL)
                     free(result.ant);
+                if (result.custos != NULL)
+                    free(result.custos);
 
                 // encontrar o caminho mais curto entre as duas palavras
-                dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
+                // dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
+                result.ant = (int *)malloc(sizeof(int) * graph[i]->numOfVertices);
+                result.custos = (float *)malloc(sizeof(float) * graph[i]->numOfVertices);
 
+                GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
                 // dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
                 fprintf(fpOut, "\n");
@@ -153,6 +160,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     free(file_out);
 
     free(result.ant);
+    free(result.custos);
 
     for (int i = 0; i < numOfGraphs; i++)
     {
@@ -261,14 +269,14 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
 void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head)
 {
     dict *dict_aux = dict_head;
-
+    // encontrar o dicionario certo
     while (dict_aux->word_size != strlen(problem.arrival_word))
     {
         dict_aux = dict_aux->next;
     }
 
     /* caso nao exista caminho */
-    if (resultado.custo == -1)
+    if (resultado.custos[destino] == HUGE_VAL)
     {
         fprintf(output, "%s -1\n%s\n", problem.starting_word, problem.arrival_word);
     }
@@ -292,7 +300,7 @@ void printR(Caminho resultado, int origem, int destino, FILE *output, problem pr
 
     if (resultado.ant[destino] == origem)
     {
-        fprintf(output, "%s %i\n", dict_head->table[resultado.ant[destino]], resultado.custo);
+        fprintf(output, "%s %i\n", dict_head->table[resultado.ant[destino]], (int)resultado.custos[destino]);
     }
     else
     {

@@ -34,7 +34,6 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
 {
     Graph *G = (Graph *)malloc(sizeof(Graph));
     G->numOfVertices = numOfVertices;
-    G->numOfEdges = 0;
     G->numOfMutations = numOfMutations;
     G->wordSize = wordSize;
     G->adjList = (node **)malloc(numOfVertices * sizeof(node *));
@@ -66,7 +65,7 @@ void insert_edge(Graph *g, Edge e)
 
     g->adjList[start] = newNode(dest, g->adjList[start], e.cost);
     g->adjList[dest] = newNode(start, g->adjList[dest], e.cost);
-    g->numOfEdges++;
+
 }
 
 /**********************************************

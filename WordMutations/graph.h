@@ -20,7 +20,6 @@ typedef struct _node
 typedef struct mygraph
 {
     int numOfVertices;
-    int numOfEdges;
     int wordSize;
     int numOfMutations;
     node **adjList;
@@ -30,7 +29,7 @@ typedef struct mygraph
 typedef struct caminho
 {
     int *ant;
-    int custo;
+    float *custos;
 } Caminho;
 
 Graph *init_graph(int, int, int);
@@ -43,5 +42,17 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, 
 node *newNode(int, node *, short int);
 
 void dijkstra(int origem, int destino, Graph *grafo, Caminho *resultado, int numOfmutations);
+
+void GRAPHpfs(Graph *G, int s, int *st, float *wt, int numOfMutations);
+
+void exch(int i, int j, int *pq, int *qp);
+void PQinit(int *PQsize);
+int PQempty(int PQsize);
+void fixUp(int *pq, int k, int *qp, float *wt);
+void fixDown(int *pq, int k, int N, int *qp, float *wt);
+int less(int i, int j, float *wt);
+void PQinsert(int k, int *pq, int *qp, int *PQsize, float *wt);
+void PQchange(int k, int PQsize, int *pq, int *qp, float *wt);
+int PQdelmin(int *PQsize, int *pq, int *qp, float *wt);
 
 #endif
