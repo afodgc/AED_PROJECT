@@ -145,9 +145,14 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 // encontrar o caminho mais curto entre as duas palavras
                 // dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
                 result.ant = (int *)malloc(sizeof(int) * graph[i]->numOfVertices);
-                result.custos = (float *)malloc(sizeof(float) * graph[i]->numOfVertices);
+                if (result.ant == NULL)
+                    exit(0);
 
-                //GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
+                result.custos = (float *)malloc(sizeof(float) * graph[i]->numOfVertices);
+                if (result.custos == NULL)
+                    exit(0);
+
+                // GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
                 dijkstra(graph[i], startWordIndex, destWordIndex, result.ant, result.custos, problem.numOfmutations);
                 // dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
@@ -270,6 +275,7 @@ int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *
 void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head)
 {
     dict *dict_aux = dict_head;
+    int custo = (int)resultado.custos[destino];
     // encontrar o dicionario certo
     while (dict_aux->word_size != strlen(problem.arrival_word))
     {
@@ -283,7 +289,7 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
     }
     else
     {
-        printR(resultado, origem, destino, output, problem, dict_aux);
+        printR(resultado, origem, destino, output, problem, dict_aux, custo);
         fprintf(output, "%s\n", dict_aux->table[destino]);
     }
 
@@ -296,16 +302,16 @@ void printResposta(Caminho resultado, int origem, int destino, FILE *output, pro
  * descricao: funcao recursiva que escreve todos os resulados de
  *            um caminho mais curto menos o ultimo
  ********************************************************************/
-void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head)
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head, int custo)
 {
 
     if (resultado.ant[destino] == origem)
     {
-        fprintf(output, "%s %i\n", dict_head->table[resultado.ant[destino]], (int)resultado.custos[destino]);
+        fprintf(output, "%s %d\n", dict_head->table[resultado.ant[destino]], custo);
     }
     else
     {
-        printR(resultado, origem, resultado.ant[destino], output, problem, dict_head);
+        printR(resultado, origem, resultado.ant[destino], output, problem, dict_head, custo);
         fprintf(output, "%s\n", dict_head->table[resultado.ant[destino]]);
     }
 

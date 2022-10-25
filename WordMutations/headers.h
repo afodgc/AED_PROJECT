@@ -25,6 +25,6 @@ char *createOutput(char *name);
 int checkIfProblemIsWellDef(dict *dict_head, problem problem, FILE *fpout, int *startWordIndex, int *destWordIndex, int *numOfVertices, int printResult);
 
 void printResposta(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
-void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head);
+void printR(Caminho resultado, int origem, int destino, FILE *output, problem problem, dict *dict_head, int custo);
 
 #endif

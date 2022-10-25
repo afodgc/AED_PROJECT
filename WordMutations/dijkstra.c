@@ -190,7 +190,7 @@ void fixDown(Queue *Queu, int indiceChange, float *wt)
  *************************************************************************************/
 int less(Queue Queue, int index1, int index2, float *wt)
 {
-    if (wt[Queue.queu[index1]] < wt[Queue.queu[index2]])
+    if (wt[Queue.queu[index1]] > wt[Queue.queu[index2]])
         return 1;
     return 0;
 }
