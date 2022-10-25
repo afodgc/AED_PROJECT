@@ -31,6 +31,7 @@ void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMu
     while ((PQempty(queue) != 0) && queue.pos[destino] != -2)
     {
         v = PQdelmin(&queue, wt);
+        // percorre a lista de adjacencias do vertice com maior prioridade
         for (t = G->adjList[v]; t != NULL; t = t->next)
         {
             /* a distancia tem de ser menor que a distancia já calculada e do que a maxima */
@@ -42,6 +43,8 @@ void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMu
                 if (!PQisInQueu(queue, w))
                 {
                     PQinsert(&queue, w, wt);
+                } else {
+                    FixUp(&queue, w, wt);
                 }
                 st[w] = v;
             }
@@ -112,6 +115,10 @@ void PQfree(Queue *queu)
 
 /**************************************************************
  * PQisInQueu()
+ * 
+ * argumets:
+ *          Queu : fila de prioridades
+ *          index : vertice
  *
  * return: retorna 1 se estiver na fila
  *         retorna 0 se não estiver na fila
@@ -137,7 +144,6 @@ int PQisInQueu(Queue Queu, int index)
  ****************************************************************************************/
 void FixUp(Queue *Queu, int indiceChange, float *wt)
 {
-    // FAZER ISTO?
     int indexNaQueu = Queu->pos[indiceChange];
 
     while (indexNaQueu > 0 && less(*Queu, (indexNaQueu - 1) / 2, indexNaQueu, wt))
@@ -225,7 +231,7 @@ void PQinsert(Queue *Queu, int vertex, float *wt)
     Queu->queu[Queu->PQsize] = vertex;
 
     Queu->PQsize++;
-    FixUp(Queu, Queu->PQsize, wt);
+    FixUp(Queu, vertex, wt);
 }
 
 /******************************************************************************
