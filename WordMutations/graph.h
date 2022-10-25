@@ -32,11 +32,12 @@ typedef struct caminho
     float *custos;
 } Caminho;
 
-typedef struct Queu{
+typedef struct _Queue
+{
     int *queu;  // fila
     int *pos;   // position of the  elemts
     int PQsize; // tamanho atual da queu
-} Queu;
+} Queue;
 
 Graph *init_graph(int, int, int);
 void insert_edge(Graph *, Edge);
@@ -48,15 +49,15 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, 
 node *newNode(int, node *, short int);
 
 void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMutations);
-void exch(Queu *Queu, int index1, int index2);
-void PQinit(Queu *Queu, int size);
-int PQisInQueu(Queu Queu, int index);
-void FixUp(Queu *Queu, int indiceChange, float *wt);
-void fixDown(Queu *Queu, int indiceChange, float *wt);
-int less(Queu Queu, int index1, int index2, float *wt);
-int PQempty(Queu queu);
-void PQinsert(Queu *Queu, int index, float *wt);
-int PQdelmin(Queu *queu, float *wt);
-void PQfree(Queu *queu);
+void exch(Queue *Queu, int index1, int index2);
+void PQinit(Queue *Queu, int size);
+int PQisInQueu(Queue Queu, int index);
+void FixUp(Queue *Queu, int indiceChange, float *wt);
+void fixDown(Queue *Queu, int indiceChange, float *wt);
+int less(Queue Queu, int index1, int index2, float *wt);
+int PQempty(Queue queu);
+void PQinsert(Queue *Queu, int index, float *wt);
+int PQdelmin(Queue *queu, float *wt);
+void PQfree(Queue *queu);
 
 #endif
