@@ -225,7 +225,7 @@ void PQinsert(Queue *Queu, int vertex, float *wt)
     Queu->queu[Queu->PQsize] = vertex;
 
     Queu->PQsize++;
-    FixUp(Queu, vertex, wt);
+    FixUp(Queu, Queu->PQsize, wt);
 }
 
 /******************************************************************************
