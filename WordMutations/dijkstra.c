@@ -93,7 +93,11 @@ void PQinit(Heap *Queu, int size)
 {
     // está certa
     Queu->queu = (int *)calloc(size, sizeof(int));
+    if (Queu->queu == NULL)
+        exit(0);
     Queu->pos = (int *)malloc(sizeof(int) * size);
+    if (Queu->pos == NULL)
+        exit(0);
 
     for (int i = 0; i < size; i++)
     {
