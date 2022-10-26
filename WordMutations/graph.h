@@ -2,6 +2,7 @@
 #define GRAPH_H
 
 #include "dicionario.h"
+#include <math.h>
 
 typedef struct myedge
 {
@@ -17,12 +18,22 @@ typedef struct _node
     struct _node *next;
 } node;
 
+typedef struct _location
+{
+    node *localizacao[100];
+    int menor;
+    int maior;
+
+} location;
+
+
 typedef struct mygraph
 {
     int numOfVertices;
     int wordSize;
     int numOfMutations;
-    node **adjList;
+    node **adjList; 
+    location *adjAux;
 
 } Graph;
 
@@ -46,7 +57,7 @@ void freeGraph(Graph *);
 Graph *aloc_adjList(Graph *, dict *dict_head);
 int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost);
 
-node *newNode(int, node *, short int);
+node *newNode(int, node *, short int, location *custosLocations);
 
 void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMutations);
 void exch(Queue *Queu, int index1, int index2);

@@ -5,28 +5,98 @@
 #include "graph.h"
 
 
+
 /*******************************************************
  *  *newNode()
  * 
  * arguments:
- *              int vertex: vertice que vai ficar guardado naquele nó
- *              node *next: nó ao qual temos de adicionar um novo nó
+ *              int vertex:     vertice que vai ficar guardado naquele nó
+ *              node *next:     cabeça de lista de ajacencias antes de entrar na fução
  *              short int cost: custo associado àquele nó
+ *              location *custosLocations : guarda a localização do ultimo elemento
+ *              do de custo igual ao index
  *  
  * return: retorna o novo nó inserido na lista do nó ao qual o queriamos adionar
  * 
  * 
  * *****************************************************/
-node *newNode(int vertex, node *next, short int cost)
+node *newNode(int vertex, node *head, short int cost, location *custosLocations)
 {
-    node *x = (node *)malloc(sizeof(node));
-    if( x == NULL)
+    node *x = (node *)malloc(sizeof(node)), *aux = NULL, *aux2 = NULL;
+    int sqrtCost = (int)sqrt(cost);
+    if(x == NULL)
         exit(0);
+
     // x é do tipo node
     x->vertex = vertex;
     x->cost = cost;
-    x->next = next;
-    return x;
+
+
+    // se o custo for 1 mete logo na cabeça da lista
+    if (cost == 1){
+        x->next = head;
+        // mete este elemento como o elemento anterior ao de custo seguinte
+        if (custosLocations->localizacao[1] == NULL){
+            custosLocations->localizacao[1] = x;
+        }
+        if (sqrtCost > custosLocations->maior){
+            custosLocations->maior = sqrtCost;
+        }
+        if (sqrtCost < custosLocations->menor || custosLocations->menor == -1){
+            custosLocations->menor = sqrtCost;
+        }
+        return x;
+    } else {
+        // se ainda não estiver nada na lista
+        if (custosLocations->maior == -1 || custosLocations->menor == -1){
+            x->next = head;
+            custosLocations->localizacao[sqrtCost] = x;
+            custosLocations->menor = sqrtCost;
+            custosLocations->maior = sqrtCost;
+            return x;
+        
+        //inserir no fim 
+        } else if (sqrtCost > custosLocations->maior){
+            x->next = NULL;
+            custosLocations->localizacao[custosLocations->maior]->next = x;
+            custosLocations->localizacao[sqrtCost] = x;
+            custosLocations->maior = sqrtCost;
+            return head;
+
+        //inserir no inicio
+        } else if (sqrtCost < custosLocations->menor)
+        {
+            x->next = head;
+            custosLocations->localizacao[sqrtCost] = x;
+            custosLocations->menor = sqrtCost;
+            return x;
+
+        // inserir no meio 
+        } else {
+            // pode ser no inicio tambem
+            if (sqrtCost == custosLocations->menor){
+                x->next = head;
+                return x;
+            } else {
+                if (custosLocations->localizacao[sqrtCost - 1] == NULL){
+                    for(int i = sqrtCost - 1; aux == NULL ; i--){
+                        if (i<1)break;;
+                        aux = custosLocations->localizacao[i];
+                    }
+                } else {
+                    aux = custosLocations->localizacao[sqrtCost - 1];
+                }
+                aux2 = aux->next;
+                aux->next = x;
+                x->next = aux2;
+
+                if (custosLocations->localizacao[sqrtCost] == NULL)
+                    custosLocations->localizacao[sqrtCost] = x;
+                return head;
+            }
+        }
+    }
+
 }
 
 // inicializar o grafo
@@ -37,11 +107,17 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
     G->numOfMutations = numOfMutations;
     G->wordSize = wordSize;
     G->adjList = (node **)malloc(numOfVertices * sizeof(node *));
+    G->adjAux = (location *)malloc(numOfVertices * sizeof(location));
     if(G->adjList == NULL)
         exit(0);
 
     for (int v = 0; v < numOfVertices; v++)
     {
+        for (int i = 0; i < 100 ; i++)
+            G->adjAux[v].localizacao[i] = NULL;
+
+        G->adjAux[v].maior = -1;
+        G->adjAux[v].menor = -1;
         G->adjList[v] = NULL;
     }
 
@@ -63,8 +139,8 @@ void insert_edge(Graph *g, Edge e)
     int start = e.start;
     int dest = e.dest;
 
-    g->adjList[start] = newNode(dest, g->adjList[start], e.cost);
-    g->adjList[dest] = newNode(start, g->adjList[dest], e.cost);
+    g->adjList[start] = newNode(dest, g->adjList[start], e.cost, &g->adjAux[start]);
+    g->adjList[dest] = newNode(start, g->adjList[dest], e.cost, &g->adjAux[dest]);
 
 }
 
@@ -166,6 +242,7 @@ void freeGraph(Graph *g)
             free(tmp);
         }
     }
+    free(g->adjAux);
     free(g->adjList);
     free(g);
 }
