@@ -7,7 +7,7 @@
 
 void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMutations)
 {
-    Queue queue;
+    Heap queue;
     int custo_max = numOfMutations * numOfMutations;
     int v, w; // variaveis auxiliares
     node *t;  // node auxiliar
@@ -43,7 +43,9 @@ void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMu
                 if (!PQisInQueu(queue, w))
                 {
                     PQinsert(&queue, w, wt);
-                } else {
+                }
+                else
+                {
                     FixUp(&queue, w, wt);
                 }
                 st[w] = v;
@@ -64,7 +66,7 @@ void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMu
  *
  * side efects: troca dois elemntos numa lista de prioridades
  *******************************************************/
-void exch(Queue *Queu, int index1, int index2)
+void exch(Heap *Queu, int index1, int index2)
 {
     // esta está certa!
     int buffer;
@@ -87,11 +89,15 @@ void exch(Queue *Queu, int index1, int index2)
  *
  * side efects: aloca memoria para a fila e inicializa os seus valores
  *****************************************************************/
-void PQinit(Queue *Queu, int size)
+void PQinit(Heap *Queu, int size)
 {
     // está certa
     Queu->queu = (int *)calloc(size, sizeof(int));
+    if (Queu->queu == NULL)
+        exit(0);
     Queu->pos = (int *)malloc(sizeof(int) * size);
+    if (Queu->pos == NULL)
+        exit(0);
 
     for (int i = 0; i < size; i++)
     {
@@ -107,7 +113,7 @@ void PQinit(Queue *Queu, int size)
  *
  * side efects: liberta a memoria usada para a fila
  ****************************************************************/
-void PQfree(Queue *queu)
+void PQfree(Heap *queu)
 {
     free(queu->pos);
     free(queu->queu);
@@ -115,7 +121,7 @@ void PQfree(Queue *queu)
 
 /**************************************************************
  * PQisInQueu()
- * 
+ *
  * argumets:
  *          Queu : fila de prioridades
  *          index : vertice
@@ -123,7 +129,7 @@ void PQfree(Queue *queu)
  * return: retorna 1 se estiver na fila
  *         retorna 0 se não estiver na fila
  ***************************************************************/
-int PQisInQueu(Queue Queu, int index)
+int PQisInQueu(Heap Queu, int index)
 {
     // se o pos[index] == -1 ou -2 quer dizer que não esstá na fila
     if (Queu.pos[index] == -1 || Queu.pos[index] == -2)
@@ -142,13 +148,14 @@ int PQisInQueu(Queue Queu, int index)
  *
  * side efects: ajusta a prioridade de um elemento quando a sua prioridade aumenta
  ****************************************************************************************/
-void FixUp(Queue *Queu, int indiceChange, float *wt)
+void FixUp(Heap *Queu, int indiceChange, float *wt)
 {
     int indexNaQueu = Queu->pos[indiceChange];
+    // int indexNaQueu = indiceChange;
 
-    while (indexNaQueu > 0 && less(*Queu, (indexNaQueu - 1) / 2, indexNaQueu, wt))
+    while (indexNaQueu > 0 && less(*Queu, ((indexNaQueu - 1) / 2), indexNaQueu, wt))
     {
-        exch(Queu, indexNaQueu, (indexNaQueu - 1) / 2);
+        exch(Queu, indexNaQueu, ((indexNaQueu - 1) / 2));
         indexNaQueu = (indexNaQueu - 1) / 2; // subir um andar
     }
 }
@@ -163,7 +170,7 @@ void FixUp(Queue *Queu, int indiceChange, float *wt)
  *
  * side efects: ajusta a prioridade de um elemento quando a sua prioridade diminui
  *****************************************************************************************************/
-void fixDown(Queue *Queu, int indiceChange, float *wt)
+void fixDown(Heap *Queu, int indiceChange, float *wt)
 {
     int child;                                 // indice do nó a descender
     int indexNaQueu = Queu->pos[indiceChange]; // valor do index que está a ser movido na queue
@@ -194,7 +201,7 @@ void fixDown(Queue *Queu, int indiceChange, float *wt)
  *
  * side efects: retorna 1 se a distancia á origem do index1 for menor que o index2
  *************************************************************************************/
-int less(Queue Queue, int index1, int index2, float *wt)
+int less(Heap Queue, int index1, int index2, float *wt)
 {
     if (wt[Queue.queu[index1]] > wt[Queue.queu[index2]])
         return 1;
@@ -209,7 +216,7 @@ int less(Queue Queue, int index1, int index2, float *wt)
  * return: numero de elementos na fila
  *         se o a lista empty retorna 0
  ************************************************************/
-int PQempty(Queue queu)
+int PQempty(Heap queu)
 {
     return queu.PQsize;
 }
@@ -224,7 +231,7 @@ int PQempty(Queue queu)
  *
  * side efects: insere um elemento na fila
  ******************************************************************/
-void PQinsert(Queue *Queu, int vertex, float *wt)
+void PQinsert(Heap *Queu, int vertex, float *wt)
 {
     Queu->pos[vertex] = Queu->PQsize;
 
@@ -243,7 +250,7 @@ void PQinsert(Queue *Queu, int vertex, float *wt)
  *
  * retorna o index do elemento com mais prioridade da fila de prioridades
  *********************************************************************************/
-int PQdelmin(Queue *queu, float *wt)
+int PQdelmin(Heap *queu, float *wt)
 {
     int result = queu->queu[0]; // retirar o resultado
 
