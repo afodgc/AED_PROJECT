@@ -139,10 +139,11 @@ void FixUp(Queue *Queu, int indiceChange, float *wt)
 {
     // FAZER ISTO?
     int indexNaQueu = Queu->pos[indiceChange];
+    // int indexNaQueu = indiceChange;
 
-    while (indexNaQueu > 0 && less(*Queu, (indexNaQueu - 1) / 2, indexNaQueu, wt))
+    while (indexNaQueu > 0 && less(*Queu, ((indexNaQueu - 1) / 2), indexNaQueu, wt))
     {
-        exch(Queu, indexNaQueu, (indexNaQueu - 1) / 2);
+        exch(Queu, indexNaQueu, ((indexNaQueu - 1) / 2));
         indexNaQueu = (indexNaQueu - 1) / 2; // subir um andar
     }
 }
@@ -225,7 +226,8 @@ void PQinsert(Queue *Queu, int vertex, float *wt)
     Queu->queu[Queu->PQsize] = vertex;
 
     Queu->PQsize++;
-    FixUp(Queu, Queu->PQsize, wt);
+    // aqui no fix up mandar vertex, ou PQsize - 1 ?
+    FixUp(Queu, vertex, wt);
 }
 
 /******************************************************************************
