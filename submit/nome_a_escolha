@@ -3,29 +3,28 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls   s/call   s/call  name    
- 80.83     32.37    32.37 1351373781     0.00     0.00  compareTwoWords
-  9.22     36.05     3.69        6     0.61     0.61  dijkstra
-  9.15     39.72     3.67        6     0.61     6.01  aloc_adjList
-  0.62     39.97     0.25        6     0.04     0.04  freeGraph
-  0.07     40.00     0.03   874211     0.00     0.00  insert_edge
-  0.07     40.03     0.03       27     0.00     0.00  quicksort
-  0.02     40.04     0.01                             _init
-  0.00     40.04     0.00  1748422     0.00     0.00  newNode
-  0.00     40.04     0.00       24     0.00     0.00  binaryScr
-  0.00     40.04     0.00       12     0.00     0.00  checkIfProblemIsWellDef
-  0.00     40.04     0.00        6     0.00     0.00  init_graph
-  0.00     40.04     0.00        6     0.00     0.00  printR
-  0.00     40.04     0.00        6     0.00     0.00  printResposta
-  0.00     40.04     0.00        3     0.00     0.00  openFile
-  0.00     40.04     0.00        2     0.00     0.00  checkIfFileExists
-  0.00     40.04     0.00        2     0.00     0.00  get_arguments
-  0.00     40.04     0.00        1     0.00     0.00  aloc_dict
-  0.00     40.04     0.00        1     0.00     0.00  aloc_dict_words
-  0.00     40.04     0.00        1     0.00     0.00  contadorDePalvaras
-  0.00     40.04     0.00        1     0.00     0.00  createOutput
-  0.00     40.04     0.00        1     0.00     0.03  dict_init
-  0.00     40.04     0.00        1     0.00     0.00  freeDict
-  0.00     40.04     0.00        1     0.00    40.00  solveProblem
+ 66.08     13.79    13.79 1351373781     0.00     0.00  compareTwoWords
+ 20.27     18.02     4.23        6     0.71     0.71  dijkstra
+ 13.32     20.80     2.78        6     0.46     2.76  aloc_adjList
+  0.24     20.85     0.05       27     0.00     0.00  quicksort
+  0.10     20.87     0.02        6     0.00     0.00  freeGraph
+  0.00     20.87     0.00  1200768     0.00     0.00  newNode
+  0.00     20.87     0.00   600384     0.00     0.00  insert_edge
+  0.00     20.87     0.00       28     0.00     0.00  binaryScr
+  0.00     20.87     0.00       14     0.00     0.00  checkIfProblemIsWellDef
+  0.00     20.87     0.00        6     0.00     0.00  init_graph
+  0.00     20.87     0.00        6     0.00     0.00  printR
+  0.00     20.87     0.00        6     0.00     0.00  printResposta
+  0.00     20.87     0.00        3     0.00     0.00  openFile
+  0.00     20.87     0.00        2     0.00     0.00  checkIfFileExists
+  0.00     20.87     0.00        2     0.00     0.00  get_arguments
+  0.00     20.87     0.00        1     0.00     0.00  aloc_dict
+  0.00     20.87     0.00        1     0.00     0.00  aloc_dict_words
+  0.00     20.87     0.00        1     0.00     0.00  contadorDePalvaras
+  0.00     20.87     0.00        1     0.00     0.00  createOutput
+  0.00     20.87     0.00        1     0.00     0.05  dict_init
+  0.00     20.87     0.00        1     0.00     0.00  freeDict
+  0.00     20.87     0.00        1     0.00    20.82  solveProblem
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -63,110 +62,107 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) for 0.02% of 40.04 seconds
+granularity: each sample hit covers 4 byte(s) for 0.05% of 20.87 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]    100.0    0.00   40.03                 main [1]
-                0.00   40.00       1/1           solveProblem [2]
-                0.00    0.03       1/1           dict_init [9]
-                0.00    0.00       2/2           get_arguments [19]
-                0.00    0.00       1/1           freeDict [24]
+[1]    100.0    0.00   20.87                 main [1]
+                0.00   20.82       1/1           solveProblem [2]
+                0.00    0.05       1/1           dict_init [7]
+                0.00    0.00       2/2           get_arguments [18]
+                0.00    0.00       1/1           freeDict [23]
 -----------------------------------------------
-                0.00   40.00       1/1           main [1]
-[2]     99.9    0.00   40.00       1         solveProblem [2]
-                3.67   32.40       6/6           aloc_adjList [3]
-                3.69    0.00       6/6           dijkstra [5]
-                0.25    0.00       6/6           freeGraph [6]
-                0.00    0.00      12/12          checkIfProblemIsWellDef [13]
-                0.00    0.00       6/6           init_graph [14]
-                0.00    0.00       6/6           printResposta [16]
-                0.00    0.00       2/3           openFile [17]
-                0.00    0.00       1/1           createOutput [23]
+                0.00   20.82       1/1           main [1]
+[2]     99.8    0.00   20.82       1         solveProblem [2]
+                2.78   13.79       6/6           aloc_adjList [3]
+                4.23    0.00       6/6           dijkstra [5]
+                0.02    0.00       6/6           freeGraph [8]
+                0.00    0.00      14/14          checkIfProblemIsWellDef [12]
+                0.00    0.00       6/6           init_graph [13]
+                0.00    0.00       6/6           printResposta [15]
+                0.00    0.00       2/3           openFile [16]
+                0.00    0.00       1/1           createOutput [22]
 -----------------------------------------------
-                3.67   32.40       6/6           solveProblem [2]
-[3]     90.1    3.67   32.40       6         aloc_adjList [3]
-               32.37    0.00 1351373781/1351373781     compareTwoWords [4]
-                0.03    0.00  874211/874211      insert_edge [7]
+                2.78   13.79       6/6           solveProblem [2]
+[3]     79.4    2.78   13.79       6         aloc_adjList [3]
+               13.79    0.00 1351373781/1351373781     compareTwoWords [4]
+                0.00    0.00  600384/600384      insert_edge [10]
 -----------------------------------------------
-               32.37    0.00 1351373781/1351373781     aloc_adjList [3]
-[4]     80.8   32.37    0.00 1351373781         compareTwoWords [4]
+               13.79    0.00 1351373781/1351373781     aloc_adjList [3]
+[4]     66.1   13.79    0.00 1351373781         compareTwoWords [4]
 -----------------------------------------------
-                3.69    0.00       6/6           solveProblem [2]
-[5]      9.2    3.69    0.00       6         dijkstra [5]
+                4.23    0.00       6/6           solveProblem [2]
+[5]     20.3    4.23    0.00       6         dijkstra [5]
 -----------------------------------------------
-                0.25    0.00       6/6           solveProblem [2]
-[6]      0.6    0.25    0.00       6         freeGraph [6]
+                              524182             quicksort [6]
+                0.05    0.00      27/27          dict_init [7]
+[6]      0.2    0.05    0.00      27+524182  quicksort [6]
+                              524182             quicksort [6]
 -----------------------------------------------
-                0.03    0.00  874211/874211      aloc_adjList [3]
-[7]      0.1    0.03    0.00  874211         insert_edge [7]
-                0.00    0.00 1748422/1748422     newNode [11]
+                0.00    0.05       1/1           main [1]
+[7]      0.2    0.00    0.05       1         dict_init [7]
+                0.05    0.00      27/27          quicksort [6]
+                0.00    0.00       1/3           openFile [16]
+                0.00    0.00       1/1           contadorDePalvaras [21]
+                0.00    0.00       1/1           aloc_dict [19]
+                0.00    0.00       1/1           aloc_dict_words [20]
 -----------------------------------------------
-                              524182             quicksort [8]
-                0.03    0.00      27/27          dict_init [9]
-[8]      0.1    0.03    0.00      27+524182  quicksort [8]
-                              524182             quicksort [8]
+                0.02    0.00       6/6           solveProblem [2]
+[8]      0.1    0.02    0.00       6         freeGraph [8]
 -----------------------------------------------
-                0.00    0.03       1/1           main [1]
-[9]      0.1    0.00    0.03       1         dict_init [9]
-                0.03    0.00      27/27          quicksort [8]
-                0.00    0.00       1/3           openFile [17]
-                0.00    0.00       1/1           contadorDePalvaras [22]
-                0.00    0.00       1/1           aloc_dict [20]
-                0.00    0.00       1/1           aloc_dict_words [21]
+                0.00    0.00 1200768/1200768     insert_edge [10]
+[9]      0.0    0.00    0.00 1200768         newNode [9]
 -----------------------------------------------
-                                                 <spontaneous>
-[10]     0.0    0.01    0.00                 _init [10]
+                0.00    0.00  600384/600384      aloc_adjList [3]
+[10]     0.0    0.00    0.00  600384         insert_edge [10]
+                0.00    0.00 1200768/1200768     newNode [9]
 -----------------------------------------------
-                0.00    0.00 1748422/1748422     insert_edge [7]
-[11]     0.0    0.00    0.00 1748422         newNode [11]
+                                 318             binaryScr [11]
+                0.00    0.00      28/28          checkIfProblemIsWellDef [12]
+[11]     0.0    0.00    0.00      28+318     binaryScr [11]
+                                 318             binaryScr [11]
 -----------------------------------------------
-                                 278             binaryScr [12]
-                0.00    0.00      24/24          checkIfProblemIsWellDef [13]
-[12]     0.0    0.00    0.00      24+278     binaryScr [12]
-                                 278             binaryScr [12]
------------------------------------------------
-                0.00    0.00      12/12          solveProblem [2]
-[13]     0.0    0.00    0.00      12         checkIfProblemIsWellDef [13]
-                0.00    0.00      24/24          binaryScr [12]
+                0.00    0.00      14/14          solveProblem [2]
+[12]     0.0    0.00    0.00      14         checkIfProblemIsWellDef [12]
+                0.00    0.00      28/28          binaryScr [11]
 -----------------------------------------------
                 0.00    0.00       6/6           solveProblem [2]
-[14]     0.0    0.00    0.00       6         init_graph [14]
+[13]     0.0    0.00    0.00       6         init_graph [13]
 -----------------------------------------------
-                                  62             printR [15]
-                0.00    0.00       6/6           printResposta [16]
-[15]     0.0    0.00    0.00       6+62      printR [15]
-                                  62             printR [15]
+                                  47             printR [14]
+                0.00    0.00       6/6           printResposta [15]
+[14]     0.0    0.00    0.00       6+47      printR [14]
+                                  47             printR [14]
 -----------------------------------------------
                 0.00    0.00       6/6           solveProblem [2]
-[16]     0.0    0.00    0.00       6         printResposta [16]
-                0.00    0.00       6/6           printR [15]
+[15]     0.0    0.00    0.00       6         printResposta [15]
+                0.00    0.00       6/6           printR [14]
 -----------------------------------------------
-                0.00    0.00       1/3           dict_init [9]
+                0.00    0.00       1/3           dict_init [7]
                 0.00    0.00       2/3           solveProblem [2]
-[17]     0.0    0.00    0.00       3         openFile [17]
+[16]     0.0    0.00    0.00       3         openFile [16]
 -----------------------------------------------
-                0.00    0.00       2/2           get_arguments [19]
-[18]     0.0    0.00    0.00       2         checkIfFileExists [18]
+                0.00    0.00       2/2           get_arguments [18]
+[17]     0.0    0.00    0.00       2         checkIfFileExists [17]
 -----------------------------------------------
                 0.00    0.00       2/2           main [1]
-[19]     0.0    0.00    0.00       2         get_arguments [19]
-                0.00    0.00       2/2           checkIfFileExists [18]
+[18]     0.0    0.00    0.00       2         get_arguments [18]
+                0.00    0.00       2/2           checkIfFileExists [17]
 -----------------------------------------------
-                0.00    0.00       1/1           dict_init [9]
-[20]     0.0    0.00    0.00       1         aloc_dict [20]
+                0.00    0.00       1/1           dict_init [7]
+[19]     0.0    0.00    0.00       1         aloc_dict [19]
 -----------------------------------------------
-                0.00    0.00       1/1           dict_init [9]
-[21]     0.0    0.00    0.00       1         aloc_dict_words [21]
+                0.00    0.00       1/1           dict_init [7]
+[20]     0.0    0.00    0.00       1         aloc_dict_words [20]
 -----------------------------------------------
-                0.00    0.00       1/1           dict_init [9]
-[22]     0.0    0.00    0.00       1         contadorDePalvaras [22]
+                0.00    0.00       1/1           dict_init [7]
+[21]     0.0    0.00    0.00       1         contadorDePalvaras [21]
 -----------------------------------------------
                 0.00    0.00       1/1           solveProblem [2]
-[23]     0.0    0.00    0.00       1         createOutput [23]
+[22]     0.0    0.00    0.00       1         createOutput [22]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[24]     0.0    0.00    0.00       1         freeDict [24]
+[23]     0.0    0.00    0.00       1         freeDict [23]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -259,11 +255,11 @@ notice and this notice are preserved.
 
 Index by function name
 
-  [10] _init                  [22] contadorDePalvaras      [7] insert_edge
-   [3] aloc_adjList           [23] createOutput           [11] newNode
-  [20] aloc_dict               [9] dict_init              [17] openFile
-  [21] aloc_dict_words         [5] dijkstra               [15] printR
-  [12] binaryScr              [24] freeDict               [16] printResposta
-  [18] checkIfFileExists       [6] freeGraph               [8] quicksort
-  [13] checkIfProblemIsWellDef [19] get_arguments          [2] solveProblem
-   [4] compareTwoWords        [14] init_graph
+   [3] aloc_adjList           [22] createOutput            [9] newNode
+  [19] aloc_dict               [7] dict_init              [16] openFile
+  [20] aloc_dict_words         [5] dijkstra               [14] printR
+  [11] binaryScr              [23] freeDict               [15] printResposta
+  [17] checkIfFileExists       [8] freeGraph               [6] quicksort
+  [12] checkIfProblemIsWellDef [18] get_arguments          [2] solveProblem
+   [4] compareTwoWords        [13] init_graph
+  [21] contadorDePalvaras     [10] insert_edge

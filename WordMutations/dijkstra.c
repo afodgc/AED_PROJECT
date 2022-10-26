@@ -34,8 +34,10 @@ void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMu
         // percorre a lista de adjacencias do vertice com maior prioridade
         for (t = G->adjList[v]; t != NULL; t = t->next)
         {
+            if (t->cost > custo_max) break;
+
             /* a distancia tem de ser menor que a distancia já calculada e do que a maxima */
-            if ((wt[w = t->vertex] > P) && (t->cost <= custo_max))
+            if ((wt[w = t->vertex] > P))
             {
                 wt[w] = P; // atualizar a distancia
 

@@ -139,7 +139,13 @@ int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, 
     for (int i = 0; i < wordSize; i++)
     {
         if (word1[i] != word2[i])
+        {
             diferentChar++;
+            if (diferentChar > numOfMutations)
+            {
+                return 0;
+            }
+        }
     }
 
     if (diferentChar <= numOfMutations)
