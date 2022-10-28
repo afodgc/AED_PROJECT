@@ -32,7 +32,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     problem problem;
     Graph **graph = NULL;
     FILE *fpIn = NULL, *fpOut = NULL;
-    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0, diferentChar = 0;
+    int startWordIndex = 0, destWordIndex = 0, numOfGraphs = 0, numOfVertices = 0, i = 0, diferentChar = 0, wordSize = 0;
     char *file_out = createOutput(name_of_output_file);
     dict *dict_aux = dict_head;
     Caminho result;
@@ -57,17 +57,24 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
             continue;
 
         // se o numero de mutaçoes indicada no problema for superior ao numero que temos guardado ate agora, temos de avaliar se é preciso atualizar
-        if (numOfMutations[strlen(problem.starting_word)] < problem.numOfmutations)
+        wordSize = strlen(problem.starting_word);
+
+        if (numOfMutations[wordSize] < problem.numOfmutations)
         {
             // vamos contar o numero de caracteres diferentes entre as duas palavras, isto serve para evitar alocar um numero de mutações excessiva
             diferentChar = 0;
-            for (i = 0; i < strlen(problem.starting_word); i++)
+
+            for (i = 0; i < wordSize; i++)
             {
                 if (problem.arrival_word[i] != problem.starting_word[i])
                 {
                     diferentChar++;
                 }
             }
+
+            // se a dierença de caracters for 1 não necessita de alocar o grafo
+            if (diferentChar == 1)
+                continue;
 
             /*se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
             seja apenas igual ao numero de caracteres diferentes*/
@@ -129,6 +136,20 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         // se o problema estiver mal definido passamos ao próximo problema
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
+
+        wordSize = strlen(problem.starting_word);
+        diferentChar = 0;
+        for (int i = 0; i < wordSize; i++)
+        {
+            if (problem.starting_word[i] != problem.arrival_word[i])
+                diferentChar++;
+        }
+
+        if (diferentChar == 1)
+        {
+            fprintf(fpOut, "%s 1\n%s\n\n", problem.starting_word, problem.arrival_word);
+            continue;
+        }
 
         // percorrer o vetor de grafos
         for (i = 0; i < numOfGraphs; i++)
