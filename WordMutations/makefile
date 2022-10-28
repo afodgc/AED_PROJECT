@@ -7,8 +7,8 @@ all:
 	$(CC) $(FLAGS) -o $(TARGET) main.c arguments.c problem.c dicionario.c graph.c dijkstra.c -lm
 
 
-FILES = $(shell ls test/Primeiros/*.pals)
+FILES = $(shell ls test/Gracolas/*.pals)
 
 testes:
-	for F in ${FILES}; do valgrind --leak-check=full ./wrdmttns test/portugues.dict $${F} ; done;
+	for F in ${FILES}; do time ./wrdmttns test/portugues.dict $${F} ; done;
 
