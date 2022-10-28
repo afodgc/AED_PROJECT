@@ -137,6 +137,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
 
+        //vamos contar o numero de caracteres diferentes entre as duas palavras, se esse numero for 1, a resposta é direta
         wordSize = strlen(problem.starting_word);
         diferentChar = 0;
         for (int i = 0; i < wordSize; i++)
