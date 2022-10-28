@@ -18,23 +18,12 @@ typedef struct _node
     struct _node *next;
 } node;
 
-typedef struct _location
-{
-    node *localizacao[100];
-    int menor;
-    int maior;
-
-} location;
-
-
 typedef struct mygraph
 {
     int numOfVertices;
     int wordSize;
     int numOfMutations;
-    node **adjList; 
-    location *adjAux;
-
+    node **adjList;
 } Graph;
 
 typedef struct caminho
@@ -57,7 +46,7 @@ void freeGraph(Graph *);
 Graph *aloc_adjList(Graph *, dict *dict_head);
 int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost);
 
-node *newNode(int, node *, short int, location *custosLocations);
+node *newNode(int vertex, node *next, short int cost);
 
 void dijkstra(Graph *G, int origem, int destino, int *st, float *wt, int numOfMutations);
 void exch(Heap *Queue, int index1, int index2);

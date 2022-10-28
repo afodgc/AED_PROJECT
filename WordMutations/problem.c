@@ -20,7 +20,6 @@ FILE *openFile(char *file_pals, char *mode)
 
     if (fp == NULL)
     {
-        // funçao que dê free em tudo
         exit(0);
     }
 
@@ -36,13 +35,13 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     char *file_out = createOutput(name_of_output_file);
     dict *dict_aux = dict_head;
     Caminho result;
+    int numOfMutations[MAX_LEN_WORDS];
+
     result.custos = NULL;
     result.ant = NULL;
 
     fpIn = openFile(file_pals, "r");
     fpOut = openFile(file_out, "w");
-
-    int numOfMutations[MAX_LEN_WORDS];
 
     for (i = 0; i < MAX_LEN_WORDS; i++)
     {
@@ -72,7 +71,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 }
             }
 
-            // se a dierença de caracters for 1 não necessita de alocar o grafo
+            // se a diferença entre as duas palavras for de 1 char e existirem no dict, o caminho é direto, nao temos de alocar grafo
             if (diferentChar == 1)
                 continue;
 
@@ -107,6 +106,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
     for (i = 0; i < MAX_LEN_WORDS; i++)
     {
 
+        // o vetor numOfMutations tem o numero de mutaçoes possiveis por tamanho de palavra, o index corresponde ao tamanho da palavra
         if (numOfMutations[i] != 0)
         {
             // percorrer a lista de tabelas para encontrar o dicionario correspondente àquele tamanho de palavras
@@ -137,7 +137,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         if (checkIfProblemIsWellDef(dict_head, problem, fpOut, &startWordIndex, &destWordIndex, &numOfVertices, 1) == 0)
             continue;
 
-        //vamos contar o numero de caracteres diferentes entre as duas palavras, se esse numero for 1, a resposta é direta
+        // vamos contar o numero de caracteres diferentes entre as duas palavras, se esse numero for 1, a resposta é direta
         wordSize = strlen(problem.starting_word);
         diferentChar = 0;
         for (int i = 0; i < wordSize; i++)
@@ -158,14 +158,12 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
             // encontrar o grafo correspondente ao tamanho das palavras do problema
             if (graph[i]->wordSize == strlen(problem.starting_word))
             {
-                // dar free no vetor ant do dijkstra do problema anterior
+                // dar free no vetor ant e dos custos do dijkstra do problema anterior
                 if (result.ant != NULL)
                     free(result.ant);
                 if (result.custos != NULL)
                     free(result.custos);
 
-                // encontrar o caminho mais curto entre as duas palavras
-                
                 result.ant = (int *)malloc(sizeof(int) * graph[i]->numOfVertices);
                 if (result.ant == NULL)
                     exit(0);
@@ -174,8 +172,9 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                 if (result.custos == NULL)
                     exit(0);
 
-                // GRAPHpfs(graph[i], startWordIndex, result.ant, result.custos, problem.numOfmutations);
+                // encontrar o caminho mais curto entre as duas palavras
                 dijkstra(graph[i], startWordIndex, destWordIndex, result.ant, result.custos, problem.numOfmutations);
+
                 // dar print na resposta
                 printResposta(result, startWordIndex, destWordIndex, fpOut, problem, dict_head);
                 fprintf(fpOut, "\n");

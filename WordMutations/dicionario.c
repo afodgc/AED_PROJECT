@@ -34,20 +34,20 @@ void quicksort(char **dicionario, int first, int last)
             tmp = dicionario[i];
             dicionario[i] = dicionario[j];
             dicionario[j] = tmp;
-            //swapWords(dicionario[i], dicionario[j]);
+            // swapWords(dicionario[i], dicionario[j]);
          }
       }
-      if (pivot != j){
+      if (pivot != j)
+      {
          tmp = dicionario[pivot];
          dicionario[pivot] = dicionario[j];
          dicionario[j] = tmp;
       }
-         //swapWords(dicionario[pivot], dicionario[j]);
+      // swapWords(dicionario[pivot], dicionario[j]);
       quicksort(dicionario, first, j - 1);
       quicksort(dicionario, j + 1, last);
    }
 }
-
 
 /**************************************************************************************************
  * contadorDePalvaras()
@@ -74,7 +74,7 @@ int *contadorDePalvaras(FILE *file_dict)
       numeroPalavrasPorTamanho[tamanho]++;
    }
 
-   fseek(file_dict, 0, SEEK_SET); // mete o ponteiro do ficheiro a apontar para o inicio od ficheiro
+   fseek(file_dict, 0, SEEK_SET); // mete o ponteiro do ficheiro a apontar para o inicio do ficheiro
 
    return numeroPalavrasPorTamanho;
 }
