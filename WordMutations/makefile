@@ -10,5 +10,5 @@ all:
 FILES = $(shell ls test/Gracolas/*.pals)
 
 testes:
-	for F in ${FILES}; do ./wrdmttns test/portugues.dict $${F} ; done;
+	for F in ${FILES}; do time ./wrdmttns test/portugues.dict $${F} ; done;
 
