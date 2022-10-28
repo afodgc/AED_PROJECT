@@ -165,7 +165,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
                     free(result.custos);
 
                 // encontrar o caminho mais curto entre as duas palavras
-                // dijkstra(startWordIndex, destWordIndex, graph[i], &result, problem.numOfmutations);
+                
                 result.ant = (int *)malloc(sizeof(int) * graph[i]->numOfVertices);
                 if (result.ant == NULL)
                     exit(0);
