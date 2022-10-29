@@ -9,7 +9,7 @@
  * Data: 21/10/2022
  * =======================================================================
  *  Descrição: Este programa é a nossa implementação do projeto de AED
- *             chamado de "WordMutatios" que cacula o caminho de custo
+ *             chamado de "WordMutations" que calcula o caminho de custo
  *             minino entre duas palavras. Para mais informações
  *             sobre o projeto veja o pdf.
  *
