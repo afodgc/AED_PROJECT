@@ -4,13 +4,6 @@
 #include "dicionario.h"
 #include <math.h>
 
-typedef struct myedge
-{
-    int start;
-    int dest;
-    short int cost;
-} Edge;
-
 typedef struct _node
 {
     int vertex;
@@ -40,11 +33,11 @@ typedef struct _Heap
 } Heap;
 
 Graph *init_graph(int, int, int);
-void insert_edge(Graph *, Edge);
+void insert_edge(Graph *, int, int, short int);
 void freeGraph(Graph *);
 
 Graph *aloc_adjList(Graph *, dict *dict_head);
-int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost);
+int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, short int *cost);
 
 node *newNode(int vertex, node *next, short int cost);
 

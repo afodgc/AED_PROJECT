@@ -8,12 +8,12 @@
  *
  * Data: 21/10/2022
  * =======================================================================
- *  Descrição: Este programa é a nossa implementação do projeto de AED 
- *             chamado de "WordMutatios" que cacula o caminho de custo 
- *             minino entre duas palavras. Para mais informações 
+ *  Descrição: Este programa é a nossa implementação do projeto de AED
+ *             chamado de "WordMutatios" que cacula o caminho de custo
+ *             minino entre duas palavras. Para mais informações
  *             sobre o projeto veja o pdf.
- * 
- *  
+ *
+ *
  */
 /*========================================================================*/
 int main(int argc, char **argv)
@@ -28,10 +28,9 @@ int main(int argc, char **argv)
     strcpy(extension, ".pals");
     name_of_output_file = get_arguments(argc, argv, name_of_output_file, extension);
 
-    dict_head = dict_init(argv[1]);
+    dict_head = dict_init(argv[1], argv[2]);
 
     solveProblem(dict_head, name_of_output_file, argv[2]);
-
 
     free(name_of_output_file);
     freeDict(dict_head);

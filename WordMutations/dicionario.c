@@ -60,10 +60,10 @@ void quicksort(char **dicionario, int first, int last)
  *
  * side efects: numeroPalavrasPorTamanho alocado (deverá ser libertado posteriormente)
  *************************************************************************************************/
-int *contadorDePalvaras(FILE *file_dict)
+int *contadorDePalvarasDict(FILE *file_dict, int *numeroPalavrasPorTamanho)
 {
-   int *numeroPalavrasPorTamanho = NULL, tamanho;
-   char temporario[100];
+   int tamanho;
+   char temporario[MAX_LEN_WORDS];
 
    numeroPalavrasPorTamanho = (int *)calloc(MAX_LEN_WORDS, sizeof(int));
 
@@ -79,6 +79,23 @@ int *contadorDePalvaras(FILE *file_dict)
    return numeroPalavrasPorTamanho;
 }
 
+int *contadorDePalvarasInput(FILE *file_pals, int *wordsInInput)
+{
+   char temporario[MAX_LEN_WORDS], temporario2[MAX_LEN_WORDS];
+   int x = 0;
+
+   wordsInInput = (int *)calloc(MAX_LEN_WORDS, sizeof(int));
+   // ver os tamanhos das palavras dos problemas, para sabermos que dicts temos de alocar
+   while (fscanf(file_pals, "%s %s %d", temporario, temporario2, &x) == 3)
+   {
+      if (strlen(temporario) == strlen(temporario2))
+      {
+         wordsInInput[strlen(temporario)] = 1;
+      }
+   }
+
+   return wordsInInput;
+}
 /********************************************************************************************
  * dict_init()
  *
@@ -89,18 +106,21 @@ int *contadorDePalvaras(FILE *file_dict)
  *
  * side efects: retorna o dicionário numa estrutura de dados
  ********************************************************************************************/
-dict *dict_init(char *file_dict_name)
+dict *dict_init(char *file_dict_name, char *file_pals)
 {
-   FILE *fp_dict = NULL;
-   int *numOfWordsPerSize = NULL;
+   FILE *fp_dict = NULL, *fp_pals = NULL;
+   int *numOfWordsPerSize = NULL, *wordsInInput = NULL;
    dict *head = NULL, *aux_head = NULL;
 
+   // abrir ficheiros
    fp_dict = openFile(file_dict_name, "r");
+   fp_pals = openFile(file_pals, "r");
 
-   numOfWordsPerSize = contadorDePalvaras(fp_dict);
+   numOfWordsPerSize = contadorDePalvarasDict(fp_dict, numOfWordsPerSize);
+   wordsInInput = contadorDePalvarasInput(fp_pals, wordsInInput);
 
-   head = aloc_dict(numOfWordsPerSize, head);
-   head = aloc_dict_words(head, fp_dict);
+   head = aloc_dict(numOfWordsPerSize, head, wordsInInput);
+   head = aloc_dict_words(head, fp_dict, wordsInInput);
 
    aux_head = head;
 
@@ -111,7 +131,9 @@ dict *dict_init(char *file_dict_name)
    }
 
    free(numOfWordsPerSize);
+   free(wordsInInput);
    fclose(fp_dict);
+   fclose(fp_pals);
 
    return head;
 }
@@ -127,13 +149,13 @@ dict *dict_init(char *file_dict_name)
  *
  * side efects: aloca a memoria necessaria para todas as tabelas de palavras
  *********************************************************************************/
-dict *aloc_dict(int *numOfWordsPerSize, dict *head)
+dict *aloc_dict(int *numOfWordsPerSize, dict *head, int *wordsInInput)
 {
    dict *d = NULL, *aux = NULL;
 
    for (int index = 0; index < MAX_LEN_WORDS; index++)
    {
-      if (numOfWordsPerSize[index] != 0)
+      if (numOfWordsPerSize[index] != 0 && wordsInInput[index] == 1)
       {
          if (head == NULL)
          {
@@ -180,7 +202,7 @@ dict *aloc_dict(int *numOfWordsPerSize, dict *head)
  *
  * side efects: aloca espaço para as palavras e preenche as tabelas de palavras do dicionário
  **********************************************************************************************/
-dict *aloc_dict_words(dict *head, FILE *fp_dict)
+dict *aloc_dict_words(dict *head, FILE *fp_dict, int *wordsInInput)
 {
    char word[MAX_LEN_WORDS];
    int word_size = 0;
@@ -190,19 +212,23 @@ dict *aloc_dict_words(dict *head, FILE *fp_dict)
    {
       aux_head = head;
       word_size = strlen(word);
-
-      // temos de encontrar a lista que tenha o tamanho destas palavras
-      while (aux_head->word_size != word_size)
+      // so podemos alocar esta palavra se tivermos criado um no na lista para este tamanho
+      if (wordsInInput[word_size] == 1)
       {
-         aux_head = aux_head->next;
-      }
-      // a lista que queremos alterar está em aux_head
-      aux_head->table[aux_head->table_size] = (char *)malloc(sizeof(char) * (word_size + 1));
-      if (aux_head->table[aux_head->table_size] == NULL)
-         exit(0);
+         // temos de encontrar a lista que tenha o tamanho destas palavras
+         while (aux_head->word_size != word_size)
+         {
+            aux_head = aux_head->next;
+         }
 
-      strcpy(aux_head->table[aux_head->table_size], word);
-      (aux_head->table_size)++;
+         // a lista que queremos alterar está em aux_head
+         aux_head->table[aux_head->table_size] = (char *)malloc(sizeof(char) * (word_size + 1));
+         if (aux_head->table[aux_head->table_size] == NULL)
+            exit(0);
+
+         strcpy(aux_head->table[aux_head->table_size], word);
+         (aux_head->table_size)++;
+      }
    }
 
    return head;

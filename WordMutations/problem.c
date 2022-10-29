@@ -78,12 +78,12 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
             /*se o numero de mutaçoes for superior ou igual ao numero de caracteres diferentes temos de atualizar para que o numero de  mutaçoes
             seja apenas igual ao numero de caracteres diferentes*/
             if (problem.numOfmutations >= diferentChar)
-                if (diferentChar > numOfMutations[strlen(problem.starting_word)])
+                if (diferentChar > numOfMutations[wordSize])
                     problem.numOfmutations = diferentChar;
 
             // caso o numero de mutaçoes seja inferior ou igual ao numero de caracteres diferentes entao podemos atualizar o numero de mutaçoes
             if (problem.numOfmutations <= diferentChar)
-                numOfMutations[strlen(problem.starting_word)] = problem.numOfmutations;
+                numOfMutations[wordSize] = problem.numOfmutations;
         }
     }
 
@@ -156,7 +156,7 @@ void solveProblem(dict *dict_head, char *name_of_output_file, char *file_pals)
         for (i = 0; i < numOfGraphs; i++)
         {
             // encontrar o grafo correspondente ao tamanho das palavras do problema
-            if (graph[i]->wordSize == strlen(problem.starting_word))
+            if (graph[i]->wordSize == wordSize)
             {
                 // dar free no vetor ant e dos custos do dijkstra do problema anterior
                 if (result.ant != NULL)

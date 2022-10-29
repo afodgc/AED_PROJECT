@@ -259,7 +259,7 @@ int PQdelmin(Heap *queu, float *wt)
 
     queu->PQsize--;
 
-    fixDown(queu, queu->queu[0], wt); // AQUI O FIX DOWN NAO SERIA COM 0??
+    fixDown(queu, queu->queu[0], wt); 
 
     queu->pos[result] = -2; // mete o pos a -2 para indicar que já se sabe o caminho mais curto
 

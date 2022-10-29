@@ -59,14 +59,10 @@ Graph *init_graph(int numOfVertices, int numOfMutations, int wordSize)
  * return: void
  *
  * ********************************************/
-void insert_edge(Graph *g, Edge e)
+void insert_edge(Graph *g, int start, int dest, short int cost)
 {
-
-    int start = e.start;
-    int dest = e.dest;
-
-    g->adjList[start] = newNode(dest, g->adjList[start], e.cost);
-    g->adjList[dest] = newNode(start, g->adjList[dest], e.cost);
+    g->adjList[start] = newNode(dest, g->adjList[start], cost);
+    g->adjList[dest] = newNode(start, g->adjList[dest], cost);
 }
 
 /**********************************************
@@ -84,8 +80,7 @@ void insert_edge(Graph *g, Edge e)
 Graph *aloc_adjList(Graph *g, dict *dict_head)
 {
     dict *aux_dict = dict_head;
-    int cost = 0;
-    Edge edge;
+    short int cost = 0;
 
     // descobrir o dicionario em que temos o tamanho de palavras correspondente
     while (aux_dict != NULL)
@@ -101,10 +96,7 @@ Graph *aloc_adjList(Graph *g, dict *dict_head)
                     // se as palavras difererem menos ou igual ao num de mutações entao temos de conecta-las
                     if (compareTwoWords(aux_dict->table[i], aux_dict->table[j], g->numOfMutations, aux_dict->word_size, &cost) == 1)
                     {
-                        edge.start = i;
-                        edge.dest = j;
-                        edge.cost = cost;
-                        insert_edge(g, edge);
+                        insert_edge(g, i, j, cost);
                     }
                 }
             }
@@ -130,11 +122,10 @@ Graph *aloc_adjList(Graph *g, dict *dict_head)
  *
  ****************************************/
 
-int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, int *cost)
+int compareTwoWords(char *word1, char *word2, int numOfMutations, int wordSize, short int *cost)
 {
     // temos de ver se as palavras diferem em menos ou igual caracteres do que o numero de mutaçoes
     int diferentChar = 0;
-    *cost = 0;
 
     for (int i = 0; i < wordSize; i++)
     {

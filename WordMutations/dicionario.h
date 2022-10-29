@@ -18,10 +18,11 @@ void quicksort(char **dicionario, int first, int last);
 
 int binaryScr(char **table, int low, int high, char *palavra);
 
-int *contadorDePalvaras(FILE *file_dict);
-dict *dict_init(char *file_dict_name);
-dict *aloc_dict(int *numOfWordsPerSize, dict *head);
-dict *aloc_dict_words(dict *head, FILE *fp_dict);
+int *contadorDePalvarasDict(FILE *file_dict, int *);
+int *contadorDePalvarasInput(FILE *file_pals, int *wordsInInput);
+dict *dict_init(char *file_dict_name, char *file_pals);
+dict *aloc_dict(int *numOfWordsPerSize, dict *head, int *wordsInInput);
+dict *aloc_dict_words(dict *head, FILE *fp_dict, int *wordsInInput);
 void freeDict(dict *head);
 
 #endif
